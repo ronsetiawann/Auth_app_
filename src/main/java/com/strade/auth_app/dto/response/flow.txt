@@ -1,0 +1,43 @@
+┌─────────────────────────────────────────────────────────────┐
+│ 1. LoginValidationService.validateLogin()                   │
+│    ✓ Server ready check (min login hour)                    │
+│    ✓ User exists (Type = 0)                                 │
+│    ✓ Login retry counter (not locked)                       │
+│    ✓ User enabled                                           │
+│    ✓ User not expired                                       │
+│    ✓ Terminal not disallowed                                │
+│    ✓ Password match                                         │
+│    ✓ Password not expired                                   │
+│    ✓ AsClient check (channel restriction)                   │
+│    ✓ Password not empty                                     │
+│                                                             │
+│    ❌ If any validation fails → throw AuthException         │
+│       with specific error code (1001-3000)                  │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 2. Extract Device Fingerprint                               │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 3. Call SP Auth.SelectUser_Logon (Simplified)               │
+│    - Create session                                         │
+│    - Check trusted device                                   │
+│    - Determine MFA requirement                              │
+│    - Set session status (PENDING if MFA, ACTIVE if not)     │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 4. Reset Login Retry Counter                                │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+                    ┌─────────┴─────────┐
+                    │                   │
+              MFA Required?         MFA Not Required
+                    │                   │
+                    ↓                   ↓
+        ┌───────────────────┐   ┌──────────────────┐
+        │ Return MFA        │   │ Generate Tokens  │
+        │ Challenge         │   │ Update Success   │
+        │ + Login Message   │   │ + Login Message  │
+        └───────────────────┘   └──────────────────┘

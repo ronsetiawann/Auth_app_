@@ -1,0 +1,108 @@
+package com.strade.auth_app.scheduler;
+
+import com.strade.auth_app.constant.AppConstants;
+import com.strade.auth_app.entity.NotificationQueue;
+import com.strade.auth_app.repository.jpa.NotificationQueueRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
+/**
+ * Process notification queue
+ * Handles retry logic for failed notifications
+ */
+@Component
+@Slf4j
+@RequiredArgsConstructor
+public class NotificationQueueProcessor {
+
+    private final NotificationQueueRepository notificationQueueRepository;
+
+    /**
+     * Process pending notifications
+     * Runs every 2 minutes
+     */
+    @Scheduled(fixedRate = 120000) // Every 2 minutes
+    @Transactional
+    public void processPendingNotifications() {
+        log.debug("Processing pending notifications");
+
+        try {
+            // Get pending notifications (created in last 24 hours to avoid stuck items)
+            LocalDateTime threshold = LocalDateTime.now().minus(24, ChronoUnit.HOURS);
+
+            List<NotificationQueue> pendingNotifications =
+                    notificationQueueRepository.findPendingNotifications(10, threshold);
+
+            if (!pendingNotifications.isEmpty()) {
+                log.info("Found {} pending notifications to process", pendingNotifications.size());
+
+                for (NotificationQueue notification : pendingNotifications) {
+                    try {
+                        processNotification(notification);
+                    } catch (Exception e) {
+                        log.error("Error processing notification: {}", notification.getNotificationId(), e);
+
+                        // Mark as failed if max retries exceeded
+                        if (notification.getRetryCount() >= 3) {
+                            notification.setStatus(AppConstants.NOTIFICATION_STATUS_FAILED);
+                            notification.setErrorMessage("Max retries exceeded: " + e.getMessage());
+                            notificationQueueRepository.save(notification);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error processing notification queue", e);
+        }
+    }
+
+    /**
+     * Process single notification
+     */
+    private void processNotification(NotificationQueue notification) {
+        log.debug("Processing notification: {}", notification.getNotificationId());
+
+        // This is a placeholder - actual implementation would send via appropriate channel
+        // For now, just mark as sent
+
+        notification.setStatus(AppConstants.NOTIFICATION_STATUS_SENT);
+        notification.setSentAt(LocalDateTime.now());
+        notificationQueueRepository.save(notification);
+
+        log.debug("Notification processed: {}", notification.getNotificationId());
+    }
+
+    /**
+     * Cleanup old notifications
+     * Runs daily at 5 AM
+     */
+    @Scheduled(cron = "0 0 5 * * *") // Daily at 5:00 AM
+    @Transactional
+    public void cleanupOldNotifications() {
+        log.info("Starting cleanup of old notifications");
+
+        try {
+            // Delete sent/failed notifications older than 30 days
+            LocalDateTime threshold = LocalDateTime.now().minus(30, ChronoUnit.DAYS);
+
+            notificationQueueRepository.deleteByStatusInAndCreatedAtBefore(
+                    List.of(
+                            AppConstants.NOTIFICATION_STATUS_SENT,
+                            AppConstants.NOTIFICATION_STATUS_FAILED
+                    ),
+                    threshold
+            );
+
+            log.info("Completed cleanup of old notifications");
+        } catch (Exception e) {
+            log.error("Error during notification cleanup", e);
+        }
+    }
+}

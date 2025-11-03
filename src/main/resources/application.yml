@@ -1,0 +1,258 @@
+# ==========================================
+# STRADE Auth Service - Base Configuration
+# ==========================================
+
+# Application Configuration
+app:
+  name: STRADE Auth Service
+  version: 1.0.0
+
+  # MAIL Settings
+  mail:
+    from: ${MAIL_FROM:8ed1b644362c4d@inbox.mailtrap.io}
+    from-name: ${MAIL_FROM_NAME:STRADE}
+    enabled: ${MAIL_ENABLED:true}
+
+  # JWT Configuration
+  jwt:
+    issuer: strade-auth
+    private-key-path: ${JWT_PRIVATE_KEY_PATH:classpath:keys/private_key.pem}
+    public-key-path: ${JWT_PUBLIC_KEY_PATH:classpath:keys/public_key.pem}
+    access-token:
+      expiration-minutes: ${JWT_ACCESS_TOKEN_EXPIRATION_MINUTES:15}
+    refresh-token:
+      expiration-days: ${JWT_REFRESH_TOKEN_EXPIRATION_DAYS:30}
+
+  # Security Configuration
+  security:
+    max-login-retry: ${SECURITY_MAX_LOGIN_RETRY:5}
+    encryption-key: ${ENCRYPTION_KEY:nzWE/C1aTm/wIDAJfud40BPfj1gpHobDgCaLr8odEP0=}
+
+    # MFA Configuration
+    mfa:
+      enforced: ${MFA_ENFORCED:true}
+
+      available-methods:
+       - TOTP
+       - OTP_EMAIL
+       - OTP_WHATSAPP
+
+      totp-setup-requires-auth: false
+
+      otp:
+        length: ${MFA_OTP_LENGTH:6}
+        ttl-seconds: ${MFA_OTP_TTL_SECONDS:300}
+        max-attempts: ${MFA_OTP_MAX_ATTEMPTS:5}
+
+      totp:
+        issuer: ${MFA_TOTP_ISSUER:STRADE}
+        digits: ${MFA_TOTP_DIGITS:6}
+        period-seconds: ${MFA_TOTP_PERIOD_SECONDS:30}
+        algorithm: ${MFA_TOTP_ALGORITHM:SHA1}
+        window: ${MFA_TOTP_WINDOW:1}
+
+      trusted-device:
+        ttl-days: ${MFA_TRUSTED_DEVICE_TTL_DAYS:90}
+        max-devices: ${MFA_TRUSTED_DEVICE_MAX_DEVICES:3}
+        send-email-notification: ${MFA_TRUSTED_DEVICE_SEND_EMAIL:true}
+
+      backup-codes:
+        count: ${MFA_BACKUP_CODES_COUNT:10}
+
+    # Rate Limiting
+    rate-limit:
+      login:
+        max-attempts: ${RATE_LIMIT_LOGIN_MAX_ATTEMPTS:5}
+        window-seconds: ${RATE_LIMIT_LOGIN_WINDOW_SECONDS:300}
+      otp:
+        max-requests: ${RATE_LIMIT_OTP_MAX_REQUESTS:3}
+        window-seconds: ${RATE_LIMIT_OTP_WINDOW_SECONDS:300}
+      totp:
+        max-attempts: ${RATE_LIMIT_TOTP_MAX_ATTEMPTS:5}
+        window-seconds: ${RATE_LIMIT_TOTP_WINDOW_SECONDS:300}
+
+  # Session Configuration
+  session:
+    inactive-threshold-minutes: ${SESSION_INACTIVE_THRESHOLD_MINUTES:30}
+
+  # Scheduler Configuration
+  scheduler:
+    enabled: ${SCHEDULER_ENABLED:true}
+
+    token-cleanup:
+      enabled: ${SCHEDULER_TOKEN_CLEANUP_ENABLED:true}
+      expired-denylist: ${SCHEDULER_TOKEN_CLEANUP_EXPIRED_DENYLIST:true}
+      revoked-refresh-tokens: ${SCHEDULER_TOKEN_CLEANUP_REVOKED_REFRESH_TOKENS:true}
+      expired-otp-challenges: ${SCHEDULER_TOKEN_CLEANUP_EXPIRED_OTP_CHALLENGES:true}
+      old-otp-challenges: ${SCHEDULER_TOKEN_CLEANUP_OLD_OTP_CHALLENGES:true}
+      comprehensive-cleanup: ${SCHEDULER_TOKEN_CLEANUP_COMPREHENSIVE_CLEANUP:true}
+
+    session-cleanup:
+      enabled: ${SCHEDULER_SESSION_CLEANUP_ENABLED:true}
+      mark-inactive: ${SCHEDULER_SESSION_CLEANUP_MARK_INACTIVE:true}
+      cleanup-expired: ${SCHEDULER_SESSION_CLEANUP_CLEANUP_EXPIRED:true}
+
+    security-monitor:
+      enabled: ${SCHEDULER_SECURITY_MONITOR_ENABLED:true}
+      monitor: ${SCHEDULER_SECURITY_MONITOR_MONITOR:true}
+      login-failures: ${SCHEDULER_SECURITY_MONITOR_LOGIN_FAILURES:true}
+      token-reuse: ${SCHEDULER_SECURITY_MONITOR_TOKEN_REUSE:true}
+
+    notification-processor:
+      enabled: ${SCHEDULER_NOTIFICATION_PROCESSOR_ENABLED:true}
+      process-pending: ${SCHEDULER_NOTIFICATION_PROCESSOR_PROCESS_PENDING:true}
+      cleanup-old: ${SCHEDULER_NOTIFICATION_PROCESSOR_CLEANUP_OLD:true}
+
+    health-check:
+      enabled: ${SCHEDULER_HEALTH_CHECK_ENABLED:true}
+      database: ${SCHEDULER_HEALTH_CHECK_DATABASE:true}
+      redis: ${SCHEDULER_HEALTH_CHECK_REDIS:true}
+
+# Mekari Qontak Configuration
+mekari:
+  client-id: ${MEKARI_CLIENT_ID:fpacKJp1mkAEdh4A}
+  client-secret: ${MEKARI_CLIENT_SECRET:h88QJkCgECPZmuh4bXTjtm5ZkUO2GBS5}
+  base-url: ${MEKARI_BASE_URL:https://api.mekari.com}
+  whatsapp:
+    template-id: ${MEKARI_WHATSAPP_TEMPLATE_ID:d202a276-b483-4481-9b93-58721625c982}
+    channel-integration-id: ${MEKARI_WHATSAPP_CHANNEL_ID:d575b224-1c50-4fa7-9cbd-fd58ae84ca98}
+
+# Spring Boot Configuration
+spring:
+  application:
+    name: strade-auth-service
+
+  # Database Configuration
+  datasource:
+    url: jdbc:sqlserver://172.24.25.33:1433;databaseName=S21_RT_PLUS_IDXMOBILE_DEV;encrypt=true;trustServerCertificate=true
+    username: ${DB_USERNAME:s21rt}
+    password: ${DB_PASSWORD:diehards21rt}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+    hikari:
+      maximum-pool-size: ${DB_POOL_MAX_SIZE:20}
+      minimum-idle: ${DB_POOL_MIN_IDLE:5}
+      connection-timeout: ${DB_POOL_CONNECTION_TIMEOUT:30000}
+      idle-timeout: ${DB_POOL_IDLE_TIMEOUT:600000}
+      max-lifetime: ${DB_POOL_MAX_LIFETIME:1800000}
+
+  # JPA Configuration
+  jpa:
+    database-platform: org.hibernate.dialect.SQLServerDialect
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        jdbc:
+          time_zone: UTC
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+    show-sql: false
+
+  # Redis Configuration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      database: ${REDIS_DATABASE:0}
+      timeout: ${REDIS_TIMEOUT:2000ms}
+      lettuce:
+        pool:
+          max-active: ${REDIS_POOL_MAX_ACTIVE:20}
+          max-idle: ${REDIS_POOL_MAX_IDLE:10}
+          min-idle: ${REDIS_POOL_MIN_IDLE:5}
+          max-wait: ${REDIS_POOL_MAX_WAIT:2000ms}
+
+  # Cache Configuration
+  cache:
+    type: redis
+    redis:
+      time-to-live: ${CACHE_TTL_MILLISECONDS:1800000}
+      cache-null-values: false
+
+  # Task Execution (Async)
+  task:
+    execution:
+      pool:
+        core-size: ${ASYNC_POOL_CORE_SIZE:5}
+        max-size: ${ASYNC_POOL_MAX_SIZE:10}
+        queue-capacity: ${ASYNC_POOL_QUEUE_CAPACITY:100}
+      thread-name-prefix: auth-async-
+
+    # Task Scheduling
+    scheduling:
+      pool:
+        size: ${SCHEDULER_POOL_SIZE:5}
+      thread-name-prefix: auth-scheduler-
+
+  mail:
+    host: ${MAIL_HOST:sandbox.smtp.mailtrap.io}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:8ed1b644362c4d}
+    password: ${MAIL_PASSWORD:1cbe16d6cc54c5}
+    properties:
+      mail:
+        smtp:
+          auth: ${MAIL_SMTP_AUTH:true}
+          starttls:
+            enable: ${MAIL_SMTP_STARTTLS_ENABLE:true}
+            required: ${MAIL_SMTP_STARTTLS_REQUIRED:true}
+          connection-timeout: ${MAIL_SMTP_CONNECTION_TIMEOUT:5000}
+          timeout: ${MAIL_SMTP_TIMEOUT:5000}
+          writetimeout: ${MAIL_SMTP_WRITE_TIMEOUT:5000}
+    default-encoding: UTF-8
+    test-connection: false  # Set true untuk test saat startup
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+
+# Server Configuration
+server:
+  port: ${SERVER_PORT:8099}
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# Logging Configuration
+logging:
+  level:
+    root: ${LOG_LEVEL_ROOT:INFO}
+    com.strade.auth: ${LOG_LEVEL_APP:DEBUG}
+    org.springframework.web: ${LOG_LEVEL_SPRING_WEB:INFO}
+    org.springframework.security: ${LOG_LEVEL_SPRING_SECURITY:DEBUG}
+    org.hibernate.SQL: ${LOG_LEVEL_HIBERNATE_SQL:WARN}
+    org.hibernate.type.descriptor.sql.BasicBinder: ${LOG_LEVEL_HIBERNATE_BINDER:WARN}
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: ${LOG_FILE_PATH:logs/auth-service.log}
+    max-size: ${LOG_FILE_MAX_SIZE:10MB}
+    max-history: ${LOG_FILE_MAX_HISTORY:30}
+
+# Management & Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ${ACTUATOR_ENDPOINTS:health,info,metrics,prometheus}
+  endpoint:
+    health:
+      show-details: ${ACTUATOR_HEALTH_SHOW_DETAILS:when-authorized}
+  metrics:
+    export:
+      prometheus:
+        enabled: ${PROMETHEUS_ENABLED:true}
+
+#  codeClient / user id default,

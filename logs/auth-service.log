@@ -1,0 +1,984 @@
+2025-11-03 06:33:13 [main] INFO  c.strade.auth_app.AuthAppApplication - Starting AuthAppApplication using Java 21.0.4 with PID 15630 (/Users/ronz/Downloads/auth-app 2/target/classes started by ronz in /Users/ronz/Downloads/auth-app 2)
+2025-11-03 06:33:13 [main] INFO  c.strade.auth_app.AuthAppApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 191 ms. Found 15 JPA repository interfaces.
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.AccessTokenDenyJtiRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.AuthEventLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.BridgingClientUserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.ClientRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.KeyStoreRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.LogLoginRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.LoginShadowRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.NotificationQueueRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.OtpChallengeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.SessionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.TrustedDeviceRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.UserMfaBackupCodeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.UserMfaRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 06:33:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2025-11-03 06:33:17 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8099 (http)
+2025-11-03 06:33:17 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-03 06:33:17 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-03 06:33:17 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-03 06:33:17 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3603 ms
+2025-11-03 06:33:17 [main] INFO  c.s.a.config.JwtKeyConfiguration - 🔑 Loading private key from: classpath:keys/private_key.pem
+2025-11-03 06:33:17 [main] INFO  c.s.auth_app.security.jwt.KeyManager - Loading private key from resource: classpath:keys/private_key.pem
+2025-11-03 06:33:17 [main] INFO  c.s.a.config.JwtKeyConfiguration - 🔑 Loading public key from: classpath:keys/public_key.pem
+2025-11-03 06:33:17 [main] INFO  c.s.auth_app.security.jwt.KeyManager - Loading public key from resource: classpath:keys/public_key.pem
+2025-11-03 06:33:17 [main] INFO  c.s.a.config.JwtKeyConfiguration - ✅ KeyManager bean created with RSA key pair
+2025-11-03 06:33:17 [main] INFO  c.s.auth_app.security.jwt.KeyManager - KeyManager initialized with RSA key pair
+2025-11-03 06:33:18 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-03 06:33:18 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-11-03 06:33:18 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-11-03 06:33:18 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-03 06:33:18 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-11-03 06:33:19 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: d2c17916-2996-4236-b166-1d64f89fc563
+2025-11-03 06:33:19 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-11-03 06:33:19 [main] WARN  org.hibernate.dialect.Dialect - HHH000511: The 10.0.0 version for [org.hibernate.dialect.SQLServerDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 11.0.0. Check the community dialects project for available legacy versions.
+2025-11-03 06:33:19 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: SQLServerDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-03 06:33:19 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 10.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-03 06:33:20 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-03 06:33:20 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-03 06:33:20 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-03 06:33:23 [main] INFO  c.s.a.r.p.i.DeviceProcedureRepositoryImpl - 🔧 Initializing DeviceProcedureRepository stored procedure calls
+2025-11-03 06:33:23 [main] INFO  c.s.a.r.p.i.DeviceProcedureRepositoryImpl - ✅ DeviceProcedureRepository initialized successfully
+2025-11-03 06:33:24 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-03 06:33:24 [main] DEBUG o.s.s.c.a.a.c.AuthenticationConfiguration$DefaultPasswordEncoderAuthenticationManagerBuilder - No authenticationProviders and no parentAuthenticationManager defined. Returning null.
+2025-11-03 06:33:24 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-11-03 06:33:24 [main] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestLoggingFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-11-03 06:33:25 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8099 (http) with context path '/'
+2025-11-03 06:33:25 [main] INFO  c.strade.auth_app.AuthAppApplication - Started AuthAppApplication in 12.868 seconds (process running for 14.289)
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 5 ms
+2025-11-03 06:35:58 [http-nio-8099-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/v1/auth/login
+2025-11-03 06:35:58 [http-nio-8099-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-11-03 06:35:58 [http-nio-8099-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/v1/auth/login
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  c.s.a.controller.AuthController - Login request: userId=VT0101, channel=WEB
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  c.s.auth_app.service.AuthService - Login attempt: userId=VT0101, channel=WEB
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  c.s.a.service.LoginValidationService - Login validation passed for user: VT0101
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === SelectUser_Logon Parameters ===
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserId: VT0101
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Password: ***
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel: WEB
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppVersion: null
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ServerNo: 1
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - TerminalId: |04720149-9d2f-48|WB
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppCode: null
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DeviceId: DEV-WEB-12345
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserAgent: PostmanRuntime/7.49.1
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaEnforced: true
+2025-11-03 06:35:58 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ====================================
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Raw SP Result ===
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Key: #result-set-1 = [{IsLoginSucces=true, LoginMessage=MFA required, ErrCode=1100, DBVersion=, Channel=WEB, SessionId=31D75804-F477-4D73-B9F7-AE233BDF1FBE, Kid=strade-key-2025-001, MfaRequired=1, MyToken=null}]
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl -   └─ List size: 1
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - =====================
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Extracted Data ===
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - IsLoginSucces = true
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - LoginMessage = MFA required
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ErrCode = 1100
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DBVersion = 
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel = WEB
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - SessionId = 31D75804-F477-4D73-B9F7-AE233BDF1FBE
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Kid = strade-key-2025-001
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaRequired = 1
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MyToken = null
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ======================
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Mapped Result ===
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - IsLoginSuccess: true
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - LoginMessage: MFA required
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ErrCode: 1100
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - SessionId: 31d75804-f477-4d73-b9f7-ae233bdf1fbe
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaRequired: true
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - =====================
+2025-11-03 06:35:59 [http-nio-8099-exec-1] INFO  c.s.auth_app.service.AuthService - MFA required for userId: VT0101
+2025-11-03 06:36:00 [http-nio-8099-exec-1] INFO  c.strade.auth_app.config.AsyncConfig - Async executor initialized: corePoolSize=5, maxPoolSize=10
+2025-11-03 06:36:04 [http-nio-8099-exec-1] INFO  c.s.a.s.filter.RequestLoggingFilter - Request: POST /api/v1/auth/login - Status: 200 - Duration: 6284ms
+2025-11-03 06:37:07 [http-nio-8099-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/v1/mfa/otp/send
+2025-11-03 06:37:07 [http-nio-8099-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-11-03 06:37:07 [http-nio-8099-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/v1/mfa/otp/send
+2025-11-03 06:37:07 [http-nio-8099-exec-5] INFO  c.s.a.controller.MfaController - Send OTP request: sessionId=31d75804-f477-4d73-b9f7-ae233bdf1fbe, channel=email
+2025-11-03 06:37:07 [http-nio-8099-exec-5] INFO  c.strade.auth_app.service.OtpService - Sending OTP for sessionId: 31d75804-f477-4d73-b9f7-ae233bdf1fbe, channel: email
+2025-11-03 06:37:23 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.MfaProcedureRepositoryImpl - OTP challenge created: 4B51E34C-D3C3-4313-AD82-532E76D3E877
+2025-11-03 06:37:27 [http-nio-8099-exec-5] INFO  c.strade.auth_app.service.OtpService - OTP challenge created: 4b51e34c-d3c3-4313-ad82-532e76d3e877
+2025-11-03 06:37:28 [http-nio-8099-exec-5] INFO  c.s.a.s.notification.EmailService - Sending OTP email to sroni898@gmail.com for user VT0101
+2025-11-03 06:37:35 [http-nio-8099-exec-5] INFO  c.s.a.s.notification.EmailService - OTP email sent successfully. NotificationId: bbc0ca6c-d122-4122-ab46-6ef87429c99c
+2025-11-03 06:37:35 [http-nio-8099-exec-5] INFO  c.s.a.s.filter.RequestLoggingFilter - Request: POST /api/v1/mfa/otp/send - Status: 200 - Duration: 28386ms
+2025-11-03 06:38:36 [http-nio-8099-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/v1/mfa/otp/verify
+2025-11-03 06:38:36 [http-nio-8099-exec-8] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-11-03 06:38:36 [http-nio-8099-exec-8] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/v1/mfa/otp/verify
+2025-11-03 06:38:40 [http-nio-8099-exec-8] INFO  c.s.a.controller.MfaController - Verify OTP request: sessionId=31d75804-f477-4d73-b9f7-ae233bdf1fbe, challengeId=4b51e34c-d3c3-4313-ad82-532e76d3e877
+2025-11-03 06:38:40 [http-nio-8099-exec-8] INFO  c.strade.auth_app.service.MfaService - Verifying OTP for sessionId: 31d75804-f477-4d73-b9f7-ae233bdf1fbe, challengeId: 4b51e34c-d3c3-4313-ad82-532e76d3e877
+2025-11-03 06:38:43 [http-nio-8099-exec-8] INFO  c.strade.auth_app.service.MfaService - OTP verification successful for user: VT0101
+2025-11-03 06:38:43 [http-nio-8099-exec-8] INFO  c.strade.auth_app.service.MfaService - MFA login completed successfully: userId=VT0101, sessionId=31d75804-f477-4d73-b9f7-ae233bdf1fbe
+2025-11-03 06:38:46 [http-nio-8099-exec-8] INFO  c.s.a.s.filter.RequestLoggingFilter - Request: POST /api/v1/mfa/otp/verify - Status: 200 - Duration: 10114ms
+2025-11-03 07:19:23 [http-nio-8099-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/v1/auth/login
+2025-11-03 07:19:23 [http-nio-8099-exec-10] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-11-03 07:19:23 [http-nio-8099-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/v1/auth/login
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.a.controller.AuthController - Login request: userId=VT0101, channel=WEB
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.auth_app.service.AuthService - Login attempt: userId=VT0101, channel=WEB
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.a.service.LoginValidationService - Login validation passed for user: VT0101
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === SelectUser_Logon Parameters ===
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserId: VT0101
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Password: ***
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel: WEB
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppVersion: 1.1.0.8
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ServerNo: 1
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - TerminalId: |04720149-9d2f-48|WB
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppCode: IDXM02
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DeviceId: DEV-WEB-12345
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserAgent: PostmanRuntime/7.49.1
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaEnforced: true
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ====================================
+2025-11-03 07:19:23 [http-nio-8099-exec-10] ERROR c.s.a.r.p.i.AuthProcedureRepositoryImpl - ❌ Error executing SelectUser_Logon SP
+org.springframework.jdbc.UncategorizedSQLException: CallableStatementCallback; uncategorized SQLException for SQL [{call dbo.SelectUser_Logon_v2(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}]; SQL state [S0002]; error code [8144]; Procedure or function updateUserLoginSuccess has too many arguments specified.
+	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1557)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:1191)
+	at org.springframework.jdbc.core.JdbcTemplate.call(JdbcTemplate.java:1230)
+	at org.springframework.jdbc.core.simple.AbstractJdbcCall.executeCallInternal(AbstractJdbcCall.java:423)
+	at org.springframework.jdbc.core.simple.AbstractJdbcCall.doExecute(AbstractJdbcCall.java:395)
+	at org.springframework.jdbc.core.simple.SimpleJdbcCall.execute(SimpleJdbcCall.java:195)
+	at com.strade.auth_app.repository.procedure.impl.AuthProcedureRepositoryImpl.selectUserLogon(AuthProcedureRepositoryImpl.java:85)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:138)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
+	at com.strade.auth_app.repository.procedure.impl.AuthProcedureRepositoryImpl$$SpringCGLIB$$0.selectUserLogon(<generated>)
+	at com.strade.auth_app.service.AuthService.login(AuthService.java:89)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
+	at com.strade.auth_app.service.AuthService$$SpringCGLIB$$0.login(<generated>)
+	at com.strade.auth_app.controller.AuthController.login(AuthController.java:46)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:101)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:490)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:351)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:83)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:129)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at com.strade.auth_app.security.filter.RequestLoggingFilter.doFilterInternal(RequestLoggingFilter.java:32)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:334)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:225)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1776)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:975)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:493)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: Procedure or function updateUserLoginSuccess has too many arguments specified.
+	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDatabaseError(SQLServerException.java:270)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.getNextResult(SQLServerStatement.java:1735)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.doExecutePreparedStatement(SQLServerPreparedStatement.java:675)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement$PrepStmtExecCmd.doExecute(SQLServerPreparedStatement.java:594)
+	at com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:7745)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.executeCommand(SQLServerConnection.java:4391)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeCommand(SQLServerStatement.java:276)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeStatement(SQLServerStatement.java:246)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.execute(SQLServerPreparedStatement.java:571)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyCallableStatement.execute(HikariProxyCallableStatement.java)
+	at org.springframework.jdbc.core.JdbcTemplate.lambda$call$6(JdbcTemplate.java:1231)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:1172)
+	... 168 common frames omitted
+2025-11-03 07:19:23 [http-nio-8099-exec-10] ERROR c.s.a.r.p.i.AuthProcedureRepositoryImpl - Exception type: org.springframework.jdbc.UncategorizedSQLException
+2025-11-03 07:19:23 [http-nio-8099-exec-10] ERROR c.s.a.r.p.i.AuthProcedureRepositoryImpl - Exception message: CallableStatementCallback; uncategorized SQLException for SQL [{call dbo.SelectUser_Logon_v2(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}]; SQL state [S0002]; error code [8144]; Procedure or function updateUserLoginSuccess has too many arguments specified.
+2025-11-03 07:19:23 [http-nio-8099-exec-10] ERROR c.s.a.r.p.i.AuthProcedureRepositoryImpl - Cause: Procedure or function updateUserLoginSuccess has too many arguments specified.
+2025-11-03 07:19:23 [http-nio-8099-exec-10] ERROR c.s.a.e.GlobalExceptionHandler - AuthException: code=1010, message=Login procedure execution failed: CallableStatementCallback; uncategorized SQLException for SQL [{call dbo.SelectUser_Logon_v2(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}]; SQL state [S0002]; error code [8144]; Procedure or function updateUserLoginSuccess has too many arguments specified.
+2025-11-03 07:19:23 [http-nio-8099-exec-10] INFO  c.s.a.s.filter.RequestLoggingFilter - Request: POST /api/v1/auth/login - Status: 500 - Duration: 516ms
+2025-11-03 07:19:23 [auth-async-4] INFO  org.hibernate.orm.jdbc.batch - HHH100503: On release of batch it still contained JDBC statements
+2025-11-03 07:19:23 [auth-async-4] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 8152, SQLState: 22001
+2025-11-03 07:19:23 [auth-async-4] ERROR o.h.e.jdbc.spi.SqlExceptionHelper - String or binary data would be truncated.
+2025-11-03 07:19:23 [auth-async-4] ERROR o.s.a.i.SimpleAsyncUncaughtExceptionHandler - Unexpected exception occurred invoking async method: public void com.strade.auth_app.service.EventLogService.logEvent(java.lang.String,java.util.UUID,java.lang.String,java.lang.String)
+org.springframework.dao.DataIntegrityViolationException: could not execute batch [String or binary data would be truncated.] [insert into Auth.AuthEventLog (EventTime,EventType,Metadata,Reason,SessionId,UserId,EventId) values (?,?,?,?,?,?,?)]; SQL [insert into Auth.AuthEventLog (EventTime,EventType,Metadata,Reason,SessionId,UserId,EventId) values (?,?,?,?,?,?,?)]
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:297)
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:256)
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:241)
+	at org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:567)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.processCommit(AbstractPlatformTransactionManager.java:795)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.commit(AbstractPlatformTransactionManager.java:758)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.commitTransactionAfterReturning(TransactionAspectSupport.java:698)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:416)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.interceptor.AsyncExecutionInterceptor.lambda$invoke$0(AsyncExecutionInterceptor.java:114)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:317)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.hibernate.exception.DataException: could not execute batch [String or binary data would be truncated.] [insert into Auth.AuthEventLog (EventTime,EventType,Metadata,Reason,SessionId,UserId,EventId) values (?,?,?,?,?,?,?)]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:103)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
+	at org.hibernate.engine.jdbc.batch.internal.BatchImpl.lambda$performExecution$2(BatchImpl.java:293)
+	at org.hibernate.engine.jdbc.mutation.internal.PreparedStatementGroupSingleTable.forEachStatement(PreparedStatementGroupSingleTable.java:67)
+	at org.hibernate.engine.jdbc.batch.internal.BatchImpl.performExecution(BatchImpl.java:264)
+	at org.hibernate.engine.jdbc.batch.internal.BatchImpl.execute(BatchImpl.java:242)
+	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.executeBatch(JdbcCoordinatorImpl.java:188)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:674)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:511)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:414)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:41)
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
+	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1429)
+	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:491)
+	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2354)
+	at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1978)
+	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:169)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:267)
+	at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101)
+	at org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:563)
+	... 12 common frames omitted
+Caused by: java.sql.BatchUpdateException: String or binary data would be truncated.
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.executeBatch(SQLServerPreparedStatement.java:2273)
+	at com.zaxxer.hikari.pool.ProxyStatement.executeBatch(ProxyStatement.java:127)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeBatch(HikariProxyPreparedStatement.java)
+	at org.hibernate.engine.jdbc.batch.internal.BatchImpl.lambda$performExecution$2(BatchImpl.java:279)
+	... 30 common frames omitted
+2025-11-03 07:22:25 [http-nio-8099-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/v1/auth/login
+2025-11-03 07:22:25 [http-nio-8099-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-11-03 07:22:25 [http-nio-8099-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/v1/auth/login
+2025-11-03 07:22:25 [http-nio-8099-exec-1] INFO  c.s.a.controller.AuthController - Login request: userId=VT0101, channel=WEB
+2025-11-03 07:22:25 [http-nio-8099-exec-1] INFO  c.s.auth_app.service.AuthService - Login attempt: userId=VT0101, channel=WEB
+2025-11-03 07:22:25 [http-nio-8099-exec-1] INFO  c.s.a.service.LoginValidationService - Login validation passed for user: VT0101
+2025-11-03 07:22:32 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === SelectUser_Logon Parameters ===
+2025-11-03 07:22:33 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserId: VT0101
+2025-11-03 07:22:34 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Password: ***
+2025-11-03 07:22:36 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel: WEB
+2025-11-03 07:22:37 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppVersion: 1.1.0.8
+2025-11-03 07:22:38 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ServerNo: 1
+2025-11-03 07:22:39 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - TerminalId: |04720149-9d2f-48|WB
+2025-11-03 07:22:39 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppCode: IDXM02
+2025-11-03 07:22:40 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DeviceId: DEV-WEB-12345
+2025-11-03 07:22:51 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserAgent: PostmanRuntime/7.49.1
+2025-11-03 07:23:20 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaEnforced: true
+2025-11-03 07:23:21 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ====================================
+2025-11-03 07:23:56 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m5s373ms).
+2025-11-03 07:41:23 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m27s133ms).
+2025-11-03 07:41:23 [http-nio-8099-exec-1] ERROR c.s.a.r.p.i.AuthProcedureRepositoryImpl - ❌ Error executing SelectUser_Logon SP
+org.springframework.jdbc.UncategorizedSQLException: CallableStatementCallback; uncategorized SQLException for SQL [{call dbo.SelectUser_Logon_v2(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}]; SQL state [S0002]; error code [8144]; Procedure or function updateUserLoginSuccess has too many arguments specified.
+	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1557)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:1191)
+	at org.springframework.jdbc.core.JdbcTemplate.call(JdbcTemplate.java:1230)
+	at org.springframework.jdbc.core.simple.AbstractJdbcCall.executeCallInternal(AbstractJdbcCall.java:423)
+	at org.springframework.jdbc.core.simple.AbstractJdbcCall.doExecute(AbstractJdbcCall.java:395)
+	at org.springframework.jdbc.core.simple.SimpleJdbcCall.execute(SimpleJdbcCall.java:195)
+	at com.strade.auth_app.repository.procedure.impl.AuthProcedureRepositoryImpl.selectUserLogon(AuthProcedureRepositoryImpl.java:85)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:138)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
+	at com.strade.auth_app.repository.procedure.impl.AuthProcedureRepositoryImpl$$SpringCGLIB$$0.selectUserLogon(<generated>)
+	at com.strade.auth_app.service.AuthService.login(AuthService.java:89)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
+	at com.strade.auth_app.service.AuthService$$SpringCGLIB$$0.login(<generated>)
+	at com.strade.auth_app.controller.AuthController.login(AuthController.java:46)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:101)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:490)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:351)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:83)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:129)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at com.strade.auth_app.security.filter.RequestLoggingFilter.doFilterInternal(RequestLoggingFilter.java:32)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:334)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:225)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1776)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:975)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:493)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: Procedure or function updateUserLoginSuccess has too many arguments specified.
+	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDatabaseError(SQLServerException.java:270)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.getNextResult(SQLServerStatement.java:1735)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.doExecutePreparedStatement(SQLServerPreparedStatement.java:675)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement$PrepStmtExecCmd.doExecute(SQLServerPreparedStatement.java:594)
+	at com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:7745)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.executeCommand(SQLServerConnection.java:4391)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeCommand(SQLServerStatement.java:276)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeStatement(SQLServerStatement.java:246)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.execute(SQLServerPreparedStatement.java:571)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyCallableStatement.execute(HikariProxyCallableStatement.java)
+	at org.springframework.jdbc.core.JdbcTemplate.lambda$call$6(JdbcTemplate.java:1231)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:1172)
+	... 168 common frames omitted
+2025-11-03 07:41:24 [http-nio-8099-exec-1] ERROR c.s.a.r.p.i.AuthProcedureRepositoryImpl - Exception type: org.springframework.jdbc.UncategorizedSQLException
+2025-11-03 07:41:24 [http-nio-8099-exec-1] ERROR c.s.a.r.p.i.AuthProcedureRepositoryImpl - Exception message: CallableStatementCallback; uncategorized SQLException for SQL [{call dbo.SelectUser_Logon_v2(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}]; SQL state [S0002]; error code [8144]; Procedure or function updateUserLoginSuccess has too many arguments specified.
+2025-11-03 07:41:24 [http-nio-8099-exec-1] ERROR c.s.a.r.p.i.AuthProcedureRepositoryImpl - Cause: Procedure or function updateUserLoginSuccess has too many arguments specified.
+2025-11-03 07:41:24 [http-nio-8099-exec-1] ERROR c.s.a.e.GlobalExceptionHandler - AuthException: code=1010, message=Login procedure execution failed: CallableStatementCallback; uncategorized SQLException for SQL [{call dbo.SelectUser_Logon_v2(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}]; SQL state [S0002]; error code [8144]; Procedure or function updateUserLoginSuccess has too many arguments specified.
+2025-11-03 07:41:24 [http-nio-8099-exec-1] INFO  c.s.a.s.filter.RequestLoggingFilter - Request: POST /api/v1/auth/login - Status: 500 - Duration: 1138772ms
+2025-11-03 07:41:24 [auth-async-5] INFO  org.hibernate.orm.jdbc.batch - HHH100503: On release of batch it still contained JDBC statements
+2025-11-03 07:41:24 [auth-async-5] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 8152, SQLState: 22001
+2025-11-03 07:41:24 [auth-async-5] ERROR o.h.e.jdbc.spi.SqlExceptionHelper - String or binary data would be truncated.
+2025-11-03 07:41:24 [auth-async-5] ERROR o.s.a.i.SimpleAsyncUncaughtExceptionHandler - Unexpected exception occurred invoking async method: public void com.strade.auth_app.service.EventLogService.logEvent(java.lang.String,java.util.UUID,java.lang.String,java.lang.String)
+org.springframework.dao.DataIntegrityViolationException: could not execute batch [String or binary data would be truncated.] [insert into Auth.AuthEventLog (EventTime,EventType,Metadata,Reason,SessionId,UserId,EventId) values (?,?,?,?,?,?,?)]; SQL [insert into Auth.AuthEventLog (EventTime,EventType,Metadata,Reason,SessionId,UserId,EventId) values (?,?,?,?,?,?,?)]
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:297)
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:256)
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:241)
+	at org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:567)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.processCommit(AbstractPlatformTransactionManager.java:795)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.commit(AbstractPlatformTransactionManager.java:758)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.commitTransactionAfterReturning(TransactionAspectSupport.java:698)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:416)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.interceptor.AsyncExecutionInterceptor.lambda$invoke$0(AsyncExecutionInterceptor.java:114)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:317)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.hibernate.exception.DataException: could not execute batch [String or binary data would be truncated.] [insert into Auth.AuthEventLog (EventTime,EventType,Metadata,Reason,SessionId,UserId,EventId) values (?,?,?,?,?,?,?)]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:103)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
+	at org.hibernate.engine.jdbc.batch.internal.BatchImpl.lambda$performExecution$2(BatchImpl.java:293)
+	at org.hibernate.engine.jdbc.mutation.internal.PreparedStatementGroupSingleTable.forEachStatement(PreparedStatementGroupSingleTable.java:67)
+	at org.hibernate.engine.jdbc.batch.internal.BatchImpl.performExecution(BatchImpl.java:264)
+	at org.hibernate.engine.jdbc.batch.internal.BatchImpl.execute(BatchImpl.java:242)
+	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.executeBatch(JdbcCoordinatorImpl.java:188)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:674)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:511)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:414)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:41)
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
+	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1429)
+	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:491)
+	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2354)
+	at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1978)
+	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:169)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:267)
+	at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101)
+	at org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:563)
+	... 12 common frames omitted
+Caused by: java.sql.BatchUpdateException: String or binary data would be truncated.
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.executeBatch(SQLServerPreparedStatement.java:2273)
+	at com.zaxxer.hikari.pool.ProxyStatement.executeBatch(ProxyStatement.java:127)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeBatch(HikariProxyPreparedStatement.java)
+	at org.hibernate.engine.jdbc.batch.internal.BatchImpl.lambda$performExecution$2(BatchImpl.java:279)
+	... 30 common frames omitted
+2025-11-03 07:41:27 [http-nio-8099-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/v1/auth/login
+2025-11-03 07:41:27 [http-nio-8099-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-11-03 07:41:27 [http-nio-8099-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/v1/auth/login
+2025-11-03 07:41:27 [http-nio-8099-exec-5] INFO  c.s.a.controller.AuthController - Login request: userId=VT0101, channel=WEB
+2025-11-03 07:41:27 [http-nio-8099-exec-5] INFO  c.s.auth_app.service.AuthService - Login attempt: userId=VT0101, channel=WEB
+2025-11-03 07:41:27 [http-nio-8099-exec-5] INFO  c.s.a.service.LoginValidationService - Login validation passed for user: VT0101
+2025-11-03 07:41:32 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === SelectUser_Logon Parameters ===
+2025-11-03 07:41:32 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserId: VT0101
+2025-11-03 07:41:32 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Password: ***
+2025-11-03 07:41:32 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel: WEB
+2025-11-03 07:41:32 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppVersion: 1.1.0.8
+2025-11-03 07:41:32 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ServerNo: 1
+2025-11-03 07:41:33 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - TerminalId: |04720149-9d2f-48|WB
+2025-11-03 07:41:33 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppCode: IDXM02
+2025-11-03 07:41:33 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DeviceId: DEV-WEB-12345
+2025-11-03 07:41:33 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserAgent: PostmanRuntime/7.49.1
+2025-11-03 07:41:33 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaEnforced: true
+2025-11-03 07:41:34 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ====================================
+2025-11-03 07:41:48 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Raw SP Result ===
+2025-11-03 07:41:49 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Key: #result-set-1 = [{IsLoginSucces=true, LoginMessage=, ErrCode=0, DBVersion=, Channel=WEB, SessionId=1C9442CC-CD58-4EF7-BC16-57A00C4CCA52, Kid=strade-key-2025-001, MfaRequired=0, MyToken=1C9442CC-CD58-4EF7-BC16-57A00C4CCA52}]
+2025-11-03 07:41:49 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl -   └─ List size: 1
+2025-11-03 07:41:50 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - =====================
+2025-11-03 07:41:52 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Extracted Data ===
+2025-11-03 07:41:53 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - IsLoginSucces = true
+2025-11-03 07:41:53 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - LoginMessage = 
+2025-11-03 07:41:53 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ErrCode = 0
+2025-11-03 07:41:53 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DBVersion = 
+2025-11-03 07:41:53 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel = WEB
+2025-11-03 07:41:53 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - SessionId = 1C9442CC-CD58-4EF7-BC16-57A00C4CCA52
+2025-11-03 07:41:53 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Kid = strade-key-2025-001
+2025-11-03 07:41:53 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaRequired = 0
+2025-11-03 07:41:53 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MyToken = 1C9442CC-CD58-4EF7-BC16-57A00C4CCA52
+2025-11-03 07:41:53 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ======================
+2025-11-03 07:41:53 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Mapped Result ===
+2025-11-03 07:41:54 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - IsLoginSuccess: true
+2025-11-03 07:41:54 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - LoginMessage: null
+2025-11-03 07:41:54 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ErrCode: 0
+2025-11-03 07:41:54 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - SessionId: 1c9442cc-cd58-4ef7-bc16-57a00c4cca52
+2025-11-03 07:41:55 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaRequired: false
+2025-11-03 07:41:56 [http-nio-8099-exec-5] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - =====================
+2025-11-03 07:41:57 [http-nio-8099-exec-5] INFO  c.s.auth_app.service.AuthService - Login successful: userId=VT0101, sessionId=1c9442cc-cd58-4ef7-bc16-57a00c4cca52
+2025-11-03 07:41:59 [http-nio-8099-exec-5] INFO  c.s.a.s.filter.RequestLoggingFilter - Request: POST /api/v1/auth/login - Status: 200 - Duration: 32132ms
+2025-11-03 08:04:06 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11m12s901ms).
+2025-11-03 08:34:41 [http-nio-8099-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/v1/auth/login
+2025-11-03 08:34:41 [http-nio-8099-exec-8] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-11-03 08:34:41 [http-nio-8099-exec-8] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/v1/auth/login
+2025-11-03 08:34:41 [http-nio-8099-exec-8] INFO  c.s.a.controller.AuthController - Login request: userId=VT0101, channel=WEB
+2025-11-03 08:34:47 [http-nio-8099-exec-8] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection ConnectionID:18 ClientConnectionId: 7f84585d-9eea-4bf7-81d4-dfa57c6b14c1 (The connection is closed.). Possibly consider using a shorter maxLifetime value.
+2025-11-03 08:34:47 [mssql-timeout-task-1-7f84585d-9eea-4bf7-81d4-dfa57c6b14c1] WARN  c.m.s.jdbc.internals.TDS.Command - TDSCommand@326c595b (SQLServerStatement:83 executeXXX): Command could not be timed out. Reason: Socket closed
+2025-11-03 08:34:47 [http-nio-8099-exec-8] INFO  c.s.auth_app.service.AuthService - Login attempt: userId=VT0101, channel=WEB
+2025-11-03 08:34:47 [http-nio-8099-exec-8] INFO  c.s.a.service.LoginValidationService - Login validation passed for user: VT0101
+2025-11-03 08:35:32 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m54s846ms).
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === SelectUser_Logon Parameters ===
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserId: VT0101
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Password: ***
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel: WEB
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppVersion: 1.1.0.8
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ServerNo: 1
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - TerminalId: |04720149-9d2f-48|WB
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppCode: IDXM02
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DeviceId: DEV-WEB-12345
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserAgent: PostmanRuntime/7.49.1
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaEnforced: true
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ====================================
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Raw SP Result ===
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Key: #result-set-1 = [{IsLoginSucces=true, LoginMessage=, ErrCode=0, DBVersion=, Channel=WEB, SessionId=751F4A71-CB71-4B71-BF1C-480A04736D52, Kid=strade-key-2025-001, MfaRequired=0, MyToken=751F4A71-CB71-4B71-BF1C-480A04736D52}]
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl -   └─ List size: 1
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - =====================
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Extracted Data ===
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - IsLoginSucces = true
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - LoginMessage = 
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ErrCode = 0
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DBVersion = 
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel = WEB
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - SessionId = 751F4A71-CB71-4B71-BF1C-480A04736D52
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Kid = strade-key-2025-001
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaRequired = 0
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MyToken = 751F4A71-CB71-4B71-BF1C-480A04736D52
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ======================
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Mapped Result ===
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - IsLoginSuccess: true
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - LoginMessage: null
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ErrCode: 0
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - SessionId: 751f4a71-cb71-4b71-bf1c-480a04736d52
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaRequired: false
+2025-11-03 08:35:56 [http-nio-8099-exec-8] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - =====================
+2025-11-03 08:35:57 [http-nio-8099-exec-8] INFO  c.s.auth_app.service.AuthService - Login successful: userId=VT0101, sessionId=751f4a71-cb71-4b71-bf1c-480a04736d52
+2025-11-03 08:35:57 [http-nio-8099-exec-8] INFO  c.s.a.s.filter.RequestLoggingFilter - Request: POST /api/v1/auth/login - Status: 200 - Duration: 75700ms
+2025-11-03 08:36:18 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-03 08:36:18 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-11-03 08:36:18 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-03 08:36:18 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-11-03 08:36:18 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-11-03 08:36:23 [main] INFO  c.strade.auth_app.AuthAppApplication - Starting AuthAppApplication using Java 21.0.4 with PID 19076 (/Users/ronz/Downloads/auth-app 2/target/classes started by ronz in /Users/ronz/Downloads/auth-app 2)
+2025-11-03 08:36:23 [main] INFO  c.strade.auth_app.AuthAppApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 148 ms. Found 15 JPA repository interfaces.
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.AccessTokenDenyJtiRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.AuthEventLogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.BridgingClientUserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.ClientRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.KeyStoreRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.LogLoginRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.LoginShadowRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.NotificationQueueRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.OtpChallengeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.SessionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.TrustedDeviceRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.UserMfaBackupCodeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.UserMfaRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.strade.auth_app.repository.jpa.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-03 08:36:24 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 11 ms. Found 0 Redis repository interfaces.
+2025-11-03 08:36:25 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8099 (http)
+2025-11-03 08:36:25 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-03 08:36:25 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-03 08:36:25 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-03 08:36:25 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2131 ms
+2025-11-03 08:36:25 [main] INFO  c.s.a.config.JwtKeyConfiguration - 🔑 Loading private key from: classpath:keys/private_key.pem
+2025-11-03 08:36:25 [main] INFO  c.s.auth_app.security.jwt.KeyManager - Loading private key from resource: classpath:keys/private_key.pem
+2025-11-03 08:36:25 [main] INFO  c.s.a.config.JwtKeyConfiguration - 🔑 Loading public key from: classpath:keys/public_key.pem
+2025-11-03 08:36:25 [main] INFO  c.s.auth_app.security.jwt.KeyManager - Loading public key from resource: classpath:keys/public_key.pem
+2025-11-03 08:36:25 [main] INFO  c.s.a.config.JwtKeyConfiguration - ✅ KeyManager bean created with RSA key pair
+2025-11-03 08:36:25 [main] INFO  c.s.auth_app.security.jwt.KeyManager - KeyManager initialized with RSA key pair
+2025-11-03 08:36:26 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-03 08:36:26 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-11-03 08:36:26 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-11-03 08:36:26 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-03 08:36:26 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-11-03 08:36:26 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 141c8f46-f57a-4a06-bbac-7efc5752c0c1
+2025-11-03 08:36:26 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-11-03 08:36:26 [main] WARN  org.hibernate.dialect.Dialect - HHH000511: The 10.0.0 version for [org.hibernate.dialect.SQLServerDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 11.0.0. Check the community dialects project for available legacy versions.
+2025-11-03 08:36:26 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: SQLServerDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-03 08:36:27 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 10.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-03 08:36:27 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-03 08:36:27 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-03 08:36:28 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-03 08:36:29 [main] INFO  c.s.a.r.p.i.DeviceProcedureRepositoryImpl - 🔧 Initializing DeviceProcedureRepository stored procedure calls
+2025-11-03 08:36:29 [main] INFO  c.s.a.r.p.i.DeviceProcedureRepositoryImpl - ✅ DeviceProcedureRepository initialized successfully
+2025-11-03 08:36:29 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-03 08:36:29 [main] DEBUG o.s.s.c.a.a.c.AuthenticationConfiguration$DefaultPasswordEncoderAuthenticationManagerBuilder - No authenticationProviders and no parentAuthenticationManager defined. Returning null.
+2025-11-03 08:36:30 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-11-03 08:36:30 [main] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestLoggingFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-11-03 08:36:30 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8099 (http) with context path '/'
+2025-11-03 08:36:30 [main] INFO  c.strade.auth_app.AuthAppApplication - Started AuthAppApplication in 7.777 seconds (process running for 8.555)
+2025-11-03 08:36:41 [http-nio-8099-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-03 08:36:41 [http-nio-8099-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-11-03 08:36:41 [http-nio-8099-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 13 ms
+2025-11-03 08:36:41 [http-nio-8099-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/v1/auth/login
+2025-11-03 08:36:41 [http-nio-8099-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-11-03 08:36:41 [http-nio-8099-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/v1/auth/login
+2025-11-03 08:36:41 [http-nio-8099-exec-2] INFO  c.s.a.controller.AuthController - Login request: userId=VT0101, channel=WEB
+2025-11-03 08:36:41 [http-nio-8099-exec-2] INFO  c.s.auth_app.service.AuthService - Login attempt: userId=VT0101, channel=WEB
+2025-11-03 08:36:41 [http-nio-8099-exec-2] INFO  c.s.a.service.LoginValidationService - Login validation passed for user: VT0101
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === SelectUser_Logon Parameters ===
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserId: VT0101
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Password: ***
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel: WEB
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppVersion: 1.1.0.8
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ServerNo: 1
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - TerminalId: |04720149-9d2f-48|WB
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppCode: IDXM02
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DeviceId: DEV-WEB-12345
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserAgent: PostmanRuntime/7.49.1
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaEnforced: true
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ====================================
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Raw SP Result ===
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Key: #result-set-1 = [{IsLoginSucces=true, LoginMessage=, ErrCode=0, DBVersion=, Channel=WEB, SessionId=774E4006-1083-458F-8801-36C7FB32DA4D, Kid=strade-key-2025-001, MfaRequired=0, MyToken=774E4006-1083-458F-8801-36C7FB32DA4D}]
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl -   └─ List size: 1
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - =====================
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Extracted Data ===
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - IsLoginSucces = true
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - LoginMessage = 
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ErrCode = 0
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DBVersion = 
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel = WEB
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - SessionId = 774E4006-1083-458F-8801-36C7FB32DA4D
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Kid = strade-key-2025-001
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaRequired = 0
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MyToken = 774E4006-1083-458F-8801-36C7FB32DA4D
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ======================
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Mapped Result ===
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - IsLoginSuccess: true
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - LoginMessage: null
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ErrCode: 0
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - SessionId: 774e4006-1083-458f-8801-36c7fb32da4d
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaRequired: false
+2025-11-03 08:36:44 [http-nio-8099-exec-2] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - =====================
+2025-11-03 08:36:45 [http-nio-8099-exec-2] INFO  c.strade.auth_app.config.AsyncConfig - Async executor initialized: corePoolSize=5, maxPoolSize=10
+2025-11-03 08:36:45 [http-nio-8099-exec-2] INFO  c.s.auth_app.service.AuthService - Login successful: userId=VT0101, sessionId=774e4006-1083-458f-8801-36c7fb32da4d
+2025-11-03 08:36:48 [http-nio-8099-exec-2] INFO  c.s.a.s.filter.RequestLoggingFilter - Request: POST /api/v1/auth/login - Status: 200 - Duration: 7281ms
+2025-11-03 08:36:59 [http-nio-8099-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/v1/auth/login
+2025-11-03 08:36:59 [http-nio-8099-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-11-03 08:36:59 [http-nio-8099-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/v1/auth/login
+2025-11-03 08:36:59 [http-nio-8099-exec-3] INFO  c.s.a.controller.AuthController - Login request: userId=VT0101, channel=WEB
+2025-11-03 08:36:59 [http-nio-8099-exec-3] INFO  c.s.auth_app.service.AuthService - Login attempt: userId=VT0101, channel=WEB
+2025-11-03 08:36:59 [http-nio-8099-exec-3] INFO  c.s.a.service.LoginValidationService - Login validation passed for user: VT0101
+2025-11-03 08:37:09 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === SelectUser_Logon Parameters ===
+2025-11-03 08:37:10 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserId: VT0101
+2025-11-03 08:37:10 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Password: ***
+2025-11-03 08:37:10 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel: WEB
+2025-11-03 08:37:11 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppVersion: 1.1.0.8
+2025-11-03 08:37:11 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ServerNo: 1
+2025-11-03 08:37:11 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - TerminalId: |04720149-9d2f-48|WB
+2025-11-03 08:37:11 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppCode: IDXM02
+2025-11-03 08:37:11 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DeviceId: DEV-WEB-12345
+2025-11-03 08:37:12 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserAgent: PostmanRuntime/7.49.1
+2025-11-03 08:37:14 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaEnforced: true
+2025-11-03 08:37:15 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ====================================
+2025-11-03 08:37:35 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Raw SP Result ===
+2025-11-03 08:37:36 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Key: #result-set-1 = [{IsLoginSucces=true, LoginMessage=, ErrCode=0, DBVersion=, Channel=WEB, SessionId=41A0E3CF-C53C-4347-8E53-B1994228B15C, Kid=strade-key-2025-001, MfaRequired=0, MyToken=41A0E3CF-C53C-4347-8E53-B1994228B15C}]
+2025-11-03 08:37:36 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl -   └─ List size: 1
+2025-11-03 08:37:37 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - =====================
+2025-11-03 08:37:40 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Extracted Data ===
+2025-11-03 08:37:41 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - IsLoginSucces = true
+2025-11-03 08:37:41 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - LoginMessage = 
+2025-11-03 08:37:41 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ErrCode = 0
+2025-11-03 08:37:41 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DBVersion = 
+2025-11-03 08:37:41 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel = WEB
+2025-11-03 08:37:41 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - SessionId = 41A0E3CF-C53C-4347-8E53-B1994228B15C
+2025-11-03 08:37:41 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Kid = strade-key-2025-001
+2025-11-03 08:37:41 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaRequired = 0
+2025-11-03 08:37:41 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MyToken = 41A0E3CF-C53C-4347-8E53-B1994228B15C
+2025-11-03 08:37:42 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ======================
+2025-11-03 08:37:43 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Mapped Result ===
+2025-11-03 08:37:43 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - IsLoginSuccess: true
+2025-11-03 08:37:43 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - LoginMessage: null
+2025-11-03 08:37:44 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ErrCode: 0
+2025-11-03 08:37:45 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - SessionId: 41a0e3cf-c53c-4347-8e53-b1994228b15c
+2025-11-03 08:38:10 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaRequired: false
+2025-11-03 08:38:10 [http-nio-8099-exec-3] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - =====================
+2025-11-03 08:38:10 [http-nio-8099-exec-3] INFO  c.s.auth_app.service.AuthService - Login successful: userId=VT0101, sessionId=41a0e3cf-c53c-4347-8e53-b1994228b15c
+2025-11-03 08:38:13 [http-nio-8099-exec-3] INFO  c.s.a.s.filter.RequestLoggingFilter - Request: POST /api/v1/auth/login - Status: 200 - Duration: 73792ms
+2025-11-03 08:38:30 [http-nio-8099-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/v1/auth/login
+2025-11-03 08:38:30 [http-nio-8099-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-11-03 08:38:30 [http-nio-8099-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/v1/auth/login
+2025-11-03 08:38:30 [http-nio-8099-exec-4] INFO  c.s.a.controller.AuthController - Login request: userId=VT0101, channel=WEB
+2025-11-03 08:38:30 [http-nio-8099-exec-4] INFO  c.s.auth_app.service.AuthService - Login attempt: userId=VT0101, channel=WEB
+2025-11-03 08:38:30 [http-nio-8099-exec-4] INFO  c.s.a.service.LoginValidationService - Login validation passed for user: VT0101
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === SelectUser_Logon Parameters ===
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserId: VT0101
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Password: ***
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel: WEB
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppVersion: null
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ServerNo: 1
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - TerminalId: |04720149-9d2f-48|WB
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppCode: null
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DeviceId: DEV-WEB-12345
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserAgent: PostmanRuntime/7.49.1
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaEnforced: true
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ====================================
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Raw SP Result ===
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Key: #result-set-1 = [{IsLoginSucces=true, LoginMessage=, ErrCode=0, DBVersion=, Channel=WEB, SessionId=AF299ED0-E8FA-47E6-A991-5C5C774A699D, Kid=strade-key-2025-001, MfaRequired=0, MyToken=AF299ED0-E8FA-47E6-A991-5C5C774A699D}]
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl -   └─ List size: 1
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - =====================
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Extracted Data ===
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - IsLoginSucces = true
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - LoginMessage = 
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ErrCode = 0
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DBVersion = 
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel = WEB
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - SessionId = AF299ED0-E8FA-47E6-A991-5C5C774A699D
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Kid = strade-key-2025-001
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaRequired = 0
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MyToken = AF299ED0-E8FA-47E6-A991-5C5C774A699D
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ======================
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Mapped Result ===
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - IsLoginSuccess: true
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - LoginMessage: null
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ErrCode: 0
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - SessionId: af299ed0-e8fa-47e6-a991-5c5c774a699d
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaRequired: false
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - =====================
+2025-11-03 08:38:33 [http-nio-8099-exec-4] INFO  c.s.auth_app.service.AuthService - Login successful: userId=VT0101, sessionId=af299ed0-e8fa-47e6-a991-5c5c774a699d
+2025-11-03 08:38:34 [http-nio-8099-exec-4] INFO  c.s.a.s.filter.RequestLoggingFilter - Request: POST /api/v1/auth/login - Status: 200 - Duration: 3839ms
+2025-11-03 09:03:23 [http-nio-8099-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/v1/auth/login
+2025-11-03 09:03:23 [http-nio-8099-exec-8] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-11-03 09:03:23 [http-nio-8099-exec-8] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/v1/auth/login
+2025-11-03 09:03:23 [http-nio-8099-exec-8] INFO  c.s.a.controller.AuthController - Login request: userId=VT0101, channel=WEB
+2025-11-03 09:03:23 [http-nio-8099-exec-8] INFO  c.s.auth_app.service.AuthService - Login attempt: userId=VT0101, channel=WEB
+2025-11-03 09:03:23 [http-nio-8099-exec-8] ERROR c.s.a.e.GlobalExceptionHandler - AuthException: code=1006, message=Wrong Password, Login Failed!
+2025-11-03 09:03:23 [http-nio-8099-exec-8] INFO  c.s.a.s.filter.RequestLoggingFilter - Request: POST /api/v1/auth/login - Status: 401 - Duration: 139ms
+2025-11-03 09:07:12 [http-nio-8099-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/v1/auth/login
+2025-11-03 09:07:12 [http-nio-8099-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-11-03 09:07:12 [http-nio-8099-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/v1/auth/login
+2025-11-03 09:07:12 [http-nio-8099-exec-1] INFO  c.s.a.controller.AuthController - Login request: userId=VT0101, channel=WEB
+2025-11-03 09:07:12 [http-nio-8099-exec-1] INFO  c.s.auth_app.service.AuthService - Login attempt: userId=VT0101, channel=WEB
+2025-11-03 09:07:12 [http-nio-8099-exec-1] INFO  c.s.a.service.LoginValidationService - Login validation passed for user: VT0101
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === SelectUser_Logon Parameters ===
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserId: VT0101
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Password: ***
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel: WEB
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppVersion: null
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ServerNo: 1
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - TerminalId: |04720149-9d2f-48|WB
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - AppCode: null
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DeviceId: DEV-WEB-12345
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - UserAgent: PostmanRuntime/7.49.1
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaEnforced: true
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ====================================
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Raw SP Result ===
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Key: #result-set-1 = [{IsLoginSucces=true, LoginMessage=, ErrCode=0, DBVersion=, Channel=WEB, SessionId=209D65A7-B876-438C-B332-D4981FE50ACF, Kid=strade-key-2025-001, MfaRequired=0, MyToken=209D65A7-B876-438C-B332-D4981FE50ACF}]
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl -   └─ List size: 1
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - =====================
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Extracted Data ===
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - IsLoginSucces = true
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - LoginMessage = 
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ErrCode = 0
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - DBVersion = 
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Channel = WEB
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - SessionId = 209D65A7-B876-438C-B332-D4981FE50ACF
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - Kid = strade-key-2025-001
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaRequired = 0
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MyToken = 209D65A7-B876-438C-B332-D4981FE50ACF
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ======================
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - === Mapped Result ===
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - IsLoginSuccess: true
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - LoginMessage: null
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - ErrCode: 0
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - SessionId: 209d65a7-b876-438c-b332-d4981fe50acf
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - MfaRequired: false
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.a.r.p.i.AuthProcedureRepositoryImpl - =====================
+2025-11-03 09:07:15 [http-nio-8099-exec-1] INFO  c.s.auth_app.service.AuthService - Login successful: userId=VT0101, sessionId=209d65a7-b876-438c-b332-d4981fe50acf
+2025-11-03 09:07:16 [http-nio-8099-exec-1] INFO  c.s.a.s.filter.RequestLoggingFilter - Request: POST /api/v1/auth/login - Status: 200 - Duration: 3505ms

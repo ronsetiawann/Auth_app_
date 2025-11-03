@@ -1,0 +1,57 @@
+package com.strade.auth_app.scheduler;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+/**
+ * Health check scheduler
+ * Monitors system health and connectivity
+ */
+@Component
+@Slf4j
+@RequiredArgsConstructor
+public class HealthCheckScheduler {
+
+    private final JdbcTemplate jdbcTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
+
+    /**
+     * Check database connectivity
+     * Runs every 5 minutes
+     */
+    @Scheduled(fixedRate = 300000) // Every 5 minutes
+    public void checkDatabaseHealth() {
+        try {
+            jdbcTemplate.queryForObject("SELECT 1", Integer.class);
+            log.debug("Database health check: OK");
+        } catch (Exception e) {
+            log.error("Database health check FAILED", e);
+            // Could trigger alert here
+        }
+    }
+
+    /**
+     * Check Redis connectivity
+     * Runs every 5 minutes
+     */
+    @Scheduled(fixedRate = 300000) // Every 5 minutes
+    public void checkRedisHealth() {
+        try {
+            redisTemplate.opsForValue().set("health:check", "OK");
+            String value = (String) redisTemplate.opsForValue().get("health:check");
+
+            if ("OK".equals(value)) {
+                log.debug("Redis health check: OK");
+            } else {
+                log.warn("Redis health check: Unexpected value");
+            }
+        } catch (Exception e) {
+            log.error("Redis health check FAILED", e);
+            // Could trigger alert here
+        }
+    }
+}
