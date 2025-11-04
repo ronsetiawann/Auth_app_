@@ -63,6 +63,10 @@ public class MfaService {
     private final JwtProvider jwtProvider;
     private final SecurityProperties securityProperties;
 
+    // ========================================
+    // CHECK MFA STATUS
+    // ========================================
+
     /**
      * Get available MFA methods for user
      */
@@ -138,6 +142,10 @@ public class MfaService {
                 .build();
     }
 
+    // ========================================
+    // TOTP MANAGEMENT SERVICES
+    // ========================================
+
     /**
      * Setup TOTP for user
      */
@@ -156,7 +164,7 @@ public class MfaService {
             });
 
             // Generate TOTP secret
-            String secret = totpValidator.generateSecret();
+             String secret = totpValidator.generateSecret();
 
             // Encrypt secret
             String encryptionKey = appProperties.getSecurity().getEncryptionKey();
@@ -212,7 +220,7 @@ public class MfaService {
     }
 
     /**
-     * Activate TOTP (verify first code)
+     * Activate TOTP (existing method - untuk authenticated user)
      */
     @Transactional
     public void activateTotp(String userId, TotpActivateRequest request) {
@@ -262,10 +270,101 @@ public class MfaService {
     }
 
     /**
+     * Activate TOTP and complete login (for new users during login flow)
+     */
+    @Transactional
+    public MfaVerifyResponse activateTotpAndCompleteLogin(
+            String userId,
+            UUID sessionId,
+            TotpActivateRequest request
+    ) {
+        log.info("Activating TOTP and completing login for user: {}, sessionId: {}",
+                userId, sessionId);
+
+        // Get session
+        Session session = sessionRepository.findBySessionId(sessionId)
+                .orElseThrow(() -> new AuthException(
+                        ErrorCode.SESSION_NOT_FOUND,
+                        "Session not found"
+                ));
+
+        if (session.getStatus() != AppConstants.SESSION_STATUS_PENDING) {
+            throw new AuthException(
+                    ErrorCode.SESSION_INACTIVE,
+                    "Session is not pending MFA"
+            );
+        }
+
+        // Get user MFA config
+        UserMfa userMfa = userMfaRepository.findByUserId(userId)
+                .orElseThrow(() -> new MfaException(
+                        ErrorCode.TOTP_NOT_SETUP,
+                        "TOTP is not set up"
+                ));
+
+        if (userMfa.isTotpActive()) {
+            throw new MfaException(
+                    ErrorCode.MFA_ALREADY_ENABLED,
+                    "TOTP is already activated"
+            );
+        }
+
+        // Decrypt secret
+        String encryptionKey = appProperties.getSecurity().getEncryptionKey();
+        String secret = EncryptionUtil.decrypt(userMfa.getTotpSecretEnc(), encryptionKey);
+
+        // Verify TOTP code
+        long currentTimeStep;
+        try {
+            currentTimeStep = totpValidator.validateCode(secret, request.getCode(), null);
+        } catch (MfaException e) {
+            throw new MfaException(
+                    ErrorCode.TOTP_INVALID,
+                    "Invalid verification code"
+            );
+        }
+
+        // ✅ Activate TOTP
+        userMfa.setTotpEnabled(true);
+        userMfa.setTotpStatus((byte) 1); // ACTIVE
+        userMfa.setActivatedAt(LocalDateTime.now());
+        userMfa.setActivationChannel("web");
+        userMfa.setActivationMethod("manual");
+        userMfa.setLastUsedTimeStep(currentTimeStep);
+        userMfaRepository.save(userMfa);
+
+        // ✅ Handle trusted device (if requested)
+        mfaProcedureRepository.verifyTotpForLogin(
+                userId,
+                sessionId,
+                true, // TOTP verified
+                request.getTrustThisDevice(),
+                appProperties.getSecurity().getMfa().getTrustedDevice().getTtlDays(),
+                request.getDeviceType(),
+                request.getDeviceName(),
+                appProperties.getSecurity().getMfa().getTrustedDevice().getMaxDevices(),
+                appProperties.getSecurity().getMfa().getTrustedDevice().isSendEmailNotification()
+        );
+
+        // ✅ Update session MFA method
+        session.setMfaMethod("totp");
+        sessionRepository.save(session);
+
+        // Log events
+        eventLogService.logEvent(userId, sessionId, EventTypes.TOTP_ENABLED, "TOTP activated");
+        eventLogService.logEvent(userId, sessionId, EventTypes.TOTP_VERIFIED, "TOTP verified on activation");
+
+        log.info("TOTP activated and verified successfully for user: {}", userId);
+
+        // ✅ Complete login and generate tokens
+        return completeLoginAfterMfa(session);
+    }
+
+    /**
      * Verify TOTP for login
      */
     @Transactional
-    public void verifyTotpForLogin(TotpVerifyRequest request) {
+    public MfaVerifyResponse verifyTotpForLogin(TotpVerifyRequest request) {
         log.info("Verifying TOTP for sessionId: {}", request.getSessionId());
 
         // Rate limit check
@@ -327,7 +426,7 @@ public class MfaService {
         userMfa.setLastUsedTimeStep(currentTimeStep);
         userMfaRepository.save(userMfa);
 
-        // Call stored procedure to complete MFA
+        // Call stored procedure to handle trusted device (if enabled)
         mfaProcedureRepository.verifyTotpForLogin(
                 userId,
                 request.getSessionId(),
@@ -340,12 +439,9 @@ public class MfaService {
                 appProperties.getSecurity().getMfa().getTrustedDevice().isSendEmailNotification()
         );
 
-        // Update session to ACTIVE
-        session.setStatus(AppConstants.SESSION_STATUS_ACTIVE);
-        //session.setMfaCompletedAt(LocalDateTime.now());
+        // ✅ Update session MFA method (before completing login)
         session.setMfaMethod("totp");
         sessionRepository.save(session);
-        sessionCacheService.cacheSession(session);
 
         // Reset rate limit
         rateLimitCacheService.reset("totp_verify", request.getSessionId().toString());
@@ -359,7 +455,73 @@ public class MfaService {
         );
 
         log.info("TOTP verification successful for user: {}", userId);
+
+        // ✅ Complete login and generate tokens (same as OTP)
+        return completeLoginAfterMfa(session);
     }
+
+    /**
+     * Disable TOTP
+     */
+    @Transactional
+    public void disableTotp(String userId) {
+        log.info("Disabling TOTP for user: {}", userId);
+
+        UserMfa userMfa = userMfaRepository.findByUserId(userId)
+                .orElseThrow(() -> new MfaException(
+                        ErrorCode.TOTP_NOT_SETUP,
+                        "TOTP is not set up"
+                ));
+
+        userMfa.setTotpEnabled(false);
+        userMfa.setTotpStatus((byte) 0); // INACTIVE
+        userMfa.setDeactivatedAt(LocalDateTime.now());
+
+        userMfaRepository.save(userMfa);
+
+        // Delete backup codes
+        backupCodeRepository.deleteByUserId(userId);
+
+        // Log event
+        eventLogService.logEvent(userId, null, EventTypes.TOTP_DISABLED, "TOTP disabled");
+
+        log.info("TOTP disabled for user: {}", userId);
+    }
+
+    /**
+     * Regenerate backup codes
+     */
+    @Transactional
+    public List<String> regenerateBackupCodes(String userId) {
+        log.info("Regenerating backup codes for user: {}", userId);
+
+        // Check if TOTP is enabled
+        userMfaRepository.findByUserId(userId)
+                .filter(UserMfa::isTotpActive)
+                .orElseThrow(() -> new MfaException(
+                        ErrorCode.TOTP_NOT_SETUP,
+                        "TOTP must be enabled to generate backup codes"
+                ));
+
+        // Delete old backup codes
+        backupCodeRepository.deleteByUserId(userId);
+
+        // Generate new codes
+        List<String> backupCodes = RandomUtil.generateBackupCodes(
+                appProperties.getSecurity().getMfa().getBackupCodes().getCount()
+        );
+
+        // Save new codes
+        saveBackupCodes(userId, backupCodes);
+
+        log.info("Backup codes regenerated for user: {}", userId);
+
+        return backupCodes;
+    }
+
+    // ========================================
+    // OTP VERIFICATION SERVICES
+    // ========================================
 
     /**
      * Verify OTP for login
@@ -431,12 +593,11 @@ public class MfaService {
         // ✅ Complete login and generate tokens (same as AuthService)
         return completeLoginAfterMfa(session);
     }
-    /**
-     * Generate tokens and complete login via stored procedure
-     */
-    /**
-     * Complete login after MFA verification and generate tokens
-     */
+
+    // ========================================
+    // COMPLETE LOGIN AFTER MFA OTP OR TOTP
+    // ========================================
+
     private MfaVerifyResponse completeLoginAfterMfa(Session session) {
         String userId = session.getUserId();
         UUID sessionId = session.getSessionId();
@@ -523,65 +684,6 @@ public class MfaService {
             log.warn("Failed to extract JTI from token", e);
         }
         return null;
-    }
-
-    /**
-     * Disable TOTP
-     */
-    @Transactional
-    public void disableTotp(String userId) {
-        log.info("Disabling TOTP for user: {}", userId);
-
-        UserMfa userMfa = userMfaRepository.findByUserId(userId)
-                .orElseThrow(() -> new MfaException(
-                        ErrorCode.TOTP_NOT_SETUP,
-                        "TOTP is not set up"
-                ));
-
-        userMfa.setTotpEnabled(false);
-        userMfa.setTotpStatus((byte) 0); // INACTIVE
-        userMfa.setDeactivatedAt(LocalDateTime.now());
-
-        userMfaRepository.save(userMfa);
-
-        // Delete backup codes
-        backupCodeRepository.deleteByUserId(userId);
-
-        // Log event
-        eventLogService.logEvent(userId, null, EventTypes.TOTP_DISABLED, "TOTP disabled");
-
-        log.info("TOTP disabled for user: {}", userId);
-    }
-
-    /**
-     * Regenerate backup codes
-     */
-    @Transactional
-    public List<String> regenerateBackupCodes(String userId) {
-        log.info("Regenerating backup codes for user: {}", userId);
-
-        // Check if TOTP is enabled
-        userMfaRepository.findByUserId(userId)
-                .filter(UserMfa::isTotpActive)
-                .orElseThrow(() -> new MfaException(
-                        ErrorCode.TOTP_NOT_SETUP,
-                        "TOTP must be enabled to generate backup codes"
-                ));
-
-        // Delete old backup codes
-        backupCodeRepository.deleteByUserId(userId);
-
-        // Generate new codes
-        List<String> backupCodes = RandomUtil.generateBackupCodes(
-                appProperties.getSecurity().getMfa().getBackupCodes().getCount()
-        );
-
-        // Save new codes
-        saveBackupCodes(userId, backupCodes);
-
-        log.info("Backup codes regenerated for user: {}", userId);
-
-        return backupCodes;
     }
 
     // ========================================

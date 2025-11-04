@@ -135,7 +135,7 @@ public class MfaController {
                             "Session not found"
                     ));
 
-            if (session.getStatus() != AppConstants.SESSION_STATUS_PENDING || !session.getMfaRequired()) {
+            if (session.getStatus() != AppConstants.SESSION_STATUS_PENDING || Boolean.TRUE.equals(!session.getMfaRequired())) {
                 throw new AuthException(
                         ErrorCode.INVALID_REQUEST,
                         "Session is not in MFA pending state"
@@ -164,24 +164,25 @@ public class MfaController {
      */
     @PostMapping("/totp/activate")
     @Operation(summary = "Activate TOTP", description = "Activate TOTP by verifying first code")
-    public ResponseEntity<ApiResponse<Void>> activateTotp(
-            @Valid @RequestBody TotpActivateRequest request
-    ) {
+    public ResponseEntity<ApiResponse<?>> activateTotp( @Valid @RequestBody TotpActivateRequest request) {
         boolean requiresAuth = securityProperties.getMfa().isTotpSetupRequiresAuth();
 
         String targetUserId;
+        UUID sessionId = null;
+        boolean isLoginFlow = false;
 
         if (requiresAuth) {
+            // Mode 1: User existing yang authenticated
             targetUserId = SecurityContextUtil.requireAuthentication().getUserId();
             log.info("Activate TOTP (authenticated): userId={}", targetUserId);
         } else {
+            // Mode 2: User baru during login flow
             if (request.getUserId() == null || request.getSessionId() == null) {
                 throw new AuthException(
                         ErrorCode.INVALID_REQUEST,
                         "userId and sessionId are required for TOTP activation"
                 );
             }
-
             Session session = sessionRepository.findBySessionId(request.getSessionId())
                     .orElseThrow(() -> new AuthException(
                             ErrorCode.SESSION_NOT_FOUND,
@@ -194,14 +195,28 @@ public class MfaController {
                         "UserId mismatch with session"
                 );
             }
-
             targetUserId = request.getUserId();
+            sessionId = request.getSessionId();
+            isLoginFlow = true;
+
             log.info("Activate TOTP (no-auth mode): userId={}, sessionId={}",
                     targetUserId, request.getSessionId());
         }
 
-        mfaService.activateTotp(targetUserId, request);
-        return ResponseEntity.ok(ApiResponse.success(null));
+        // ✅ Call service dengan flag isLoginFlow
+        if (isLoginFlow) {
+            // Return MfaVerifyResponse dengan tokens
+            MfaVerifyResponse response = mfaService.activateTotpAndCompleteLogin(
+                    targetUserId,
+                    sessionId,
+                    request
+            );
+            return ResponseEntity.ok(ApiResponse.success(response));
+        } else {
+            // Return Void (hanya konfirmasi)
+            mfaService.activateTotp(targetUserId, request);
+            return ResponseEntity.ok(ApiResponse.success(null));
+        }
     }
 
 
@@ -211,14 +226,15 @@ public class MfaController {
      */
     @PostMapping("/totp/verify")
     @Operation(summary = "Verify TOTP", description = "Verify TOTP code for login")
-    public ResponseEntity<ApiResponse<Void>> verifyTotp(
+    public ResponseEntity<ApiResponse<MfaVerifyResponse>> verifyTotp(
             @Valid @RequestBody TotpVerifyRequest request
     ) {
         log.info("Verify TOTP: sessionId={}", request.getSessionId());
 
-        mfaService.verifyTotpForLogin(request);
+        // ✅ Change return type to MfaVerifyResponse (same as OTP)
+        MfaVerifyResponse response = mfaService.verifyTotpForLogin(request);
 
-        return ResponseEntity.ok(ApiResponse.success(null));
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     /**

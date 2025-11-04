@@ -25,4 +25,5 @@ public class LoginProcedureResult {
     private String kid;
     private Boolean mfaRequired;
     private String myToken;
+
 }

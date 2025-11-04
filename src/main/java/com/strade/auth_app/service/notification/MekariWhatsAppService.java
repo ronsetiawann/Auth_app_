@@ -18,9 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -47,11 +45,14 @@ public class MekariWhatsAppService {
         try {
             log.info("Sending WhatsApp OTP to {} for user {}", phoneNumber, userId);
 
+            // Format phone
+            String formattedPhone = formatPhoneNumber(phoneNumber);
+
             // 1. Create notification queue entry (PENDING)
             NotificationQueue notification = createNotificationQueue(
                     notificationId,
                     userId,
-                    phoneNumber,
+                    formattedPhone,
                     name,
                     otpCode
             );
@@ -61,7 +62,7 @@ public class MekariWhatsAppService {
             String path = "/qontak/chat/v1/broadcasts/whatsapp/direct";
             Map<String, String> headers = generateHmacHeaders("POST", path);
 
-            MekariWhatsAppRequest request = buildOtpRequest(phoneNumber, name, otpCode);
+            MekariWhatsAppRequest request = buildOtpRequest(formattedPhone, name, otpCode);
 
             HttpEntity<MekariWhatsAppRequest> entity = new HttpEntity<>(
                     request,
@@ -123,11 +124,10 @@ public class MekariWhatsAppService {
         UUID notificationId = UUID.randomUUID();
 
         try {
+            log.info("Sending transaction OTP to {} for user {}", phoneNumber, userId);
+
             // Format phone
             String formattedPhone = formatPhoneNumber(phoneNumber);
-
-            // Build stock trading message
-            String message = buildStockTradingOtpMessage(name, otpCode, transactionRequest);
 
             // Create notification queue
             NotificationQueue notification = createTransactionNotificationQueue(
@@ -135,16 +135,42 @@ public class MekariWhatsAppService {
             );
             notificationQueueRepository.save(notification);
 
-            // Send via Mekari (using direct message)
-            String messageId = sendWhatsAppMessage(formattedPhone, message);
+            // Send via Mekari using template
+            String path = "/qontak/chat/v1/broadcasts/whatsapp/direct";
+            Map<String, String> headers = generateHmacHeaders("POST", path);
 
-            // Update status
-            notification.setStatus((byte) 1);
-            notification.setSentAt(LocalDateTime.now());
-            notificationQueueRepository.save(notification);
+            // Build request using template (same structure as login OTP)
+            MekariWhatsAppRequest request = buildOtpRequest(formattedPhone, name, otpCode);
 
-            log.info("Transaction OTP sent successfully: messageId={}", messageId);
-            return messageId;
+            HttpEntity<MekariWhatsAppRequest> entity = new HttpEntity<>(
+                    request,
+                    buildHttpHeaders(headers)
+            );
+
+            ResponseEntity<String> response = restTemplate.exchange(
+                    mekariProperties.getBaseUrl() + path,
+                    HttpMethod.POST,
+                    entity,
+                    String.class
+            );
+
+            // Check response
+            if (response.getStatusCode() == HttpStatus.CREATED) {
+                String broadcastId = extractBroadcastId(response.getBody());
+
+                // Update status to SENT
+                notification.setStatus((byte) 1);
+                notification.setSentAt(LocalDateTime.now());
+                notificationQueueRepository.save(notification);
+
+                log.info("Transaction OTP sent successfully: broadcastId={}", broadcastId);
+                return broadcastId;
+            } else {
+                throw new AuthException(
+                        ErrorCode.WHATSAPP_SEND_FAILED,
+                        "Mekari returned status: " + response.getStatusCode()
+                );
+            }
 
         } catch (Exception e) {
             log.error("Failed to send transaction OTP", e);
@@ -159,74 +185,6 @@ public class MekariWhatsAppService {
             throw new AuthException(
                     ErrorCode.WHATSAPP_SEND_FAILED,
                     "Failed to send transaction OTP",
-                    e
-            );
-        }
-    }
-
-    /**
-     * Send WhatsApp message via Mekari Qontak API (Direct Message)
-     * For transaction OTP with custom message
-     */
-    private String sendWhatsAppMessage(String phoneNumber, String message) {
-        try {
-            log.info("Sending WhatsApp direct message to: {}", phoneNumber);
-
-            // Build request for direct message (plain text)
-            String path = "/qontak/chat/v1/broadcasts/whatsapp/direct";
-            Map<String, String> headers = generateHmacHeaders("POST", path);
-
-            // Request body for direct message
-            Map<String, Object> requestBody = new HashMap<>();
-            requestBody.put("to_number", phoneNumber);
-            requestBody.put("to_name", "User");
-            requestBody.put("message_template_id", mekariProperties.getWhatsapp().getTemplateId());
-            requestBody.put("channel_integration_id", mekariProperties.getWhatsapp().getChannelIntegrationId());
-
-            // Language
-            requestBody.put("language", Map.of("code", "id"));
-
-            // Parameters with message body
-            Map<String, Object> parameters = new HashMap<>();
-            List<Map<String, String>> bodyParams = new ArrayList<>();
-
-            Map<String, String> bodyParam = new HashMap<>();
-            bodyParam.put("key", "1");
-            bodyParam.put("value", "message");
-            bodyParam.put("value_text", message);
-            bodyParams.add(bodyParam);
-
-            parameters.put("body", bodyParams);
-            requestBody.put("parameters", parameters);
-
-            // Build HTTP entity
-            HttpEntity<Map<String, Object>> entity = new HttpEntity<>(
-                    requestBody,
-                    buildHttpHeaders(headers)
-            );
-
-            // Send request
-            ResponseEntity<String> response = restTemplate.exchange(
-                    mekariProperties.getBaseUrl() + path,
-                    HttpMethod.POST,
-                    entity,
-                    String.class
-            );
-
-            // Handle response
-            if (response.getStatusCode() == HttpStatus.CREATED) {
-                String broadcastId = extractBroadcastId(response.getBody());
-                log.info("WhatsApp message sent successfully: broadcastId={}", broadcastId);
-                return broadcastId;
-            }
-
-            throw new RuntimeException("Failed to send WhatsApp message: " + response.getStatusCode());
-
-        } catch (Exception e) {
-            log.error("Error sending WhatsApp message to {}", phoneNumber, e);
-            throw new AuthException(
-                    ErrorCode.WHATSAPP_SEND_FAILED,
-                    "Failed to send WhatsApp message: " + e.getMessage(),
                     e
             );
         }
@@ -292,7 +250,7 @@ public class MekariWhatsAppService {
                 .channel("whatsapp")
                 .destination(phoneNumber)
                 .subject("Transaction OTP")
-                .body(buildStockTradingOtpMessage(name, otpCode, request))
+                .body("Transaction OTP code: " + otpCode)
                 .templateData(JsonUtil.toJson(templateData))
                 .status((byte) 0)
                 .retryCount((byte) 0)
@@ -301,7 +259,8 @@ public class MekariWhatsAppService {
     }
 
     /**
-     * Build Mekari WhatsApp request (for Login 2FA template)
+     * Build Mekari WhatsApp request for OTP (Both Login & Transaction)
+     * Template structure matches Mekari's requirement
      */
     private MekariWhatsAppRequest buildOtpRequest(String phoneNumber, String name, String otpCode) {
         MekariWhatsAppRequest request = new MekariWhatsAppRequest();
@@ -310,18 +269,22 @@ public class MekariWhatsAppService {
         request.setMessage_template_id(mekariProperties.getWhatsapp().getTemplateId());
         request.setChannel_integration_id(mekariProperties.getWhatsapp().getChannelIntegrationId());
 
+        // Language
         MekariWhatsAppRequest.Language language = new MekariWhatsAppRequest.Language();
         language.setCode("id");
         request.setLanguage(language);
 
+        // Parameters
         MekariWhatsAppRequest.Parameters params = new MekariWhatsAppRequest.Parameters();
 
+        // Body parameter - hanya OTP code
         MekariWhatsAppRequest.BodyParameter bodyParam = new MekariWhatsAppRequest.BodyParameter();
         bodyParam.setKey("1");
-        bodyParam.setValue("otp");
+        bodyParam.setValue("code"); // sesuai dengan template variable name
         bodyParam.setValue_text(otpCode);
         params.setBody(List.of(bodyParam));
 
+        // Button parameter - untuk autofill OTP
         MekariWhatsAppRequest.ButtonParameter buttonParam = new MekariWhatsAppRequest.ButtonParameter();
         buttonParam.setIndex("0");
         buttonParam.setType("url");
@@ -331,35 +294,6 @@ public class MekariWhatsAppService {
         request.setParameters(params);
 
         return request;
-    }
-
-    /**
-     * Build stock trading OTP message
-     */
-    private String buildStockTradingOtpMessage(
-            String name,
-            String otpCode,
-            TransactionOtpSendRequest request
-    ) {
-        String transactionType = translateTransactionType(request.getPurpose());
-
-        StringBuilder msg = new StringBuilder();
-        msg.append("Halo ").append(name).append(",\n\n");
-        msg.append("Kode OTP untuk ").append(transactionType);
-
-        // Add reference if provided
-        if (request.getReference() != null && !request.getReference().isEmpty()) {
-            msg.append("\nReferensi: ").append(request.getReference());
-        }
-
-        msg.append("\n\n");
-        msg.append("Kode OTP Anda:\n");
-        msg.append("*").append(otpCode).append("*\n\n");
-        msg.append("⏱️ Berlaku 3 menit\n");
-        msg.append("🔒 Jangan bagikan kode ini\n\n");
-        msg.append("STRADE - Your Trading Partner");
-
-        return msg.toString();
     }
 
     /**
@@ -421,8 +355,12 @@ public class MekariWhatsAppService {
     private String extractBroadcastId(String responseBody) {
         try {
             JsonNode jsonNode = objectMapper.readTree(responseBody);
-            if (jsonNode.has("id")) {
-                return jsonNode.get("id").asText();
+            // Akses data.id sesuai struktur response
+            if (jsonNode.has("data")) {
+                JsonNode dataNode = jsonNode.get("data");
+                if (dataNode.has("id")) {
+                    return dataNode.get("id").asText();
+                }
             }
             log.warn("Broadcast ID not found in response: {}", responseBody);
             return null;
@@ -459,31 +397,6 @@ public class MekariWhatsAppService {
             log.error("Failed to get broadcast log for ID: {}", broadcastId, e);
             return Map.of("error", e.getMessage());
         }
-    }
-
-    /**
-     * Translate transaction type - Stock Trading
-     */
-    private String translateTransactionType(String type) {
-        return switch (type.toLowerCase()) {
-            case "buy_stock" -> "pembelian";
-            case "sell_stock" -> "penjualan";
-            case "withdrawal" -> "penarikan dana";
-            case "deposit" -> "deposit dana";
-            case "fund_transfer" -> "transfer dana";
-            default -> "transaksi";
-        };
-    }
-
-    /**
-     * Format currency
-     */
-    private String formatCurrency(BigDecimal amount, String currency) {
-        if ("IDR".equals(currency)) {
-            NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
-            return formatter.format(amount).replace("Rp", "Rp ");
-        }
-        return currency + " " + amount.toString();
     }
 
     /**

@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 /**
  * Security configuration properties
+ *
+ * ✅ FIXED: Added minLoginHour and minLoginMinute
  */
 @Getter
 @Setter
@@ -20,6 +22,10 @@ public class SecurityProperties {
 
     private Integer maxLoginRetry = 5;
     private String encryptionKey;
+
+    // ✅ NEW: Min login time configuration
+    private Integer minLoginHour = 1;
+    private Integer minLoginMinute = 0;
 
     private MfaProperties mfa = new MfaProperties();
     private RateLimitProperties rateLimit = new RateLimitProperties();
@@ -32,10 +38,10 @@ public class SecurityProperties {
     public static class MfaProperties {
         private boolean enforced = true;
 
-        // ✅ NEW: Available methods configuration
+        // Available methods configuration
         private List<String> availableMethods = List.of("OTP_EMAIL", "OTP_SMS");
 
-        // ✅ NEW: TOTP setup mode
+        // TOTP setup mode
         private boolean totpSetupRequiresAuth = false;
 
         private OtpConfig otp = new OtpConfig();

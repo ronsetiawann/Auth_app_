@@ -6,24 +6,16 @@ import com.strade.auth_app.repository.procedure.dto.LoginProcedureResult;
 import java.util.UUID;
 
 /**
- * Repository for authentication-related stored procedures
+ * Repository for authentication stored procedures
+ *
+ * MINIMAL UPDATE - Added method signatures for new requirements
  */
 public interface AuthProcedureRepository {
 
     /**
-     * Execute SelectUser_Logon stored procedure
+     * Execute user login stored procedure
      *
-     * @param userId User ID
-     * @param password User password
-     * @param channel Channel (OS, WB, AD, .etc)
-     * @param appVersion Application version
-     * @param serverNo Server number
-     * @param terminalId Terminal ID
-     * @param appCode Application code
-     * @param deviceId Device fingerprint
-     * @param userAgent User agent string
-     * @param mfaEnforced MFA enforcement flag (from application config)
-     * @return Login result
+     * ✅ UPDATED: Added minLoginHour and minLoginMinute parameters (12 total)
      */
     LoginProcedureResult selectUserLogon(
             String userId,
@@ -35,22 +27,29 @@ public interface AuthProcedureRepository {
             String appCode,
             String deviceId,
             String userAgent,
-            Boolean mfaEnforced
+            Boolean mfaEnforced,
+            Integer minLoginHour,      // ✅ NEW PARAMETER
+            Integer minLoginMinute     // ✅ NEW PARAMETER
     );
 
     /**
-     * Execute LoginIDXMobile stored procedure (v2.3)
+     * ✅ NEW METHOD: Update session with JTI after token generation
      *
-     * @param firebaseToken Firebase authentication token
-     * @param userId User ID
-     * @param terminal Terminal identifier
-     * @param channel Channel (OS, WB, AD, .etc)
-     * @param version App version
-     * @param deviceId Device fingerprint
-     * @param userAgent User agent
-     * @param ipAddress IP address
-     * @param mfaEnforced MFA enforcement flag
-     * @return Firebase login result
+     * Calls: Auth.UpdateSessionJti
+     *
+     * This is called AFTER selectUserLogon returns and tokens are generated.
+     * Required because JTI (JWT ID) is only known after token creation.
+     */
+    void updateSessionJti(
+            UUID sessionId,
+            String jwtKid,
+            String jwtJti
+    );
+
+    /**
+     * Execute Firebase login stored procedure (IDX Mobile)
+     *
+     * UNCHANGED
      */
     FirebaseLoginProcedureResult loginIdxMobile(
             String firebaseToken,
@@ -65,7 +64,9 @@ public interface AuthProcedureRepository {
     );
 
     /**
-     * Execute updateUserLoginSuccess stored procedure
+     * Update user login success
+     *
+     * UNCHANGED
      */
     void updateUserLoginSuccess(
             String userId,
@@ -80,7 +81,9 @@ public interface AuthProcedureRepository {
     );
 
     /**
-     * Execute updateUserLoginFail stored procedure
+     * Update user login failure
+     *
+     * UNCHANGED
      */
     void updateUserLoginFail(
             String userId,

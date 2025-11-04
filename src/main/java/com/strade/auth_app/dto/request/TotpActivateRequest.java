@@ -19,10 +19,13 @@ import java.util.UUID;
 public class TotpActivateRequest {
 
     @NotBlank(message = "Code is required")
-    @Pattern(regexp = "^[0-9]{6}$", message = "Code must be 6 digits")
+    @Pattern(regexp = "^\\d{6}$", message = "TOTP code must be 6 digits")
     private String code;
-
-    // ✅ For no-auth mode
+    // For no auth mode
     private String userId;
     private UUID sessionId;
+    // Add these fields for trust device (during login flow)
+    private Boolean trustThisDevice;
+    private String deviceType;
+    private String deviceName;
 }

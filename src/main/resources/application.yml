@@ -27,6 +27,8 @@ app:
   security:
     max-login-retry: ${SECURITY_MAX_LOGIN_RETRY:5}
     encryption-key: ${ENCRYPTION_KEY:nzWE/C1aTm/wIDAJfud40BPfj1gpHobDgCaLr8odEP0=}
+    min-login-hour: 1
+    min-login-minute: 0
 
     # MFA Configuration
     mfa:
@@ -127,6 +129,9 @@ spring:
     url: jdbc:sqlserver://172.24.25.33:1433;databaseName=S21_RT_PLUS_IDXMOBILE_DEV;encrypt=true;trustServerCertificate=true
     username: ${DB_USERNAME:s21rt}
     password: ${DB_PASSWORD:diehards21rt}
+#    url: jdbc:sqlserver://172.17.201.49:1433;databaseName=S21_RT_Plus;encrypt=true;trustServerCertificate=true
+#    username: ${DB_USERNAME:safo}
+#    password: ${DB_PASSWORD:!Pi@safo2025#}
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
     hikari:

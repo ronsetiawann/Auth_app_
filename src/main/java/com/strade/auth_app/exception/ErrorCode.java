@@ -1,14 +1,15 @@
 package com.strade.auth_app.exception;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 /**
  * Centralized error codes for the authentication service
+ *
+ * VERSION 2.1 - UPDATED
+ * - Added fromCode() method for SP error code mapping
  */
 @Getter
-@RequiredArgsConstructor
 public enum ErrorCode {
 
     // ========================================
@@ -135,11 +136,54 @@ public enum ErrorCode {
     private final HttpStatus httpStatus;
 
     /**
+     * Constructor with HttpStatus
+     */
+    ErrorCode(int code, String message, HttpStatus httpStatus) {
+        this.code = code;
+        this.message = message;
+        this.httpStatus = httpStatus;
+    }
+
+    /**
      * Constructor for backward compatibility (without HttpStatus)
      */
     ErrorCode(int code, String message) {
         this.code = code;
         this.message = message;
         this.httpStatus = HttpStatus.INTERNAL_SERVER_ERROR; // Default
+    }
+
+    // ========================================
+    // ✅ NEW METHOD: Map error code to ErrorCode enum
+    // ========================================
+
+    /**
+     * Get ErrorCode from numeric error code (from stored procedure)
+     *
+     * @param code Error code from SP
+     * @return Corresponding ErrorCode enum, or AUTHENTICATION_FAILED if not found
+     */
+    public static ErrorCode fromCode(int code) {
+        for (ErrorCode errorCode : ErrorCode.values()) {
+            if (errorCode.getCode() == code) {
+                return errorCode;
+            }
+        }
+
+        // Log unmapped codes for debugging
+        System.err.println("WARNING: Unmapped error code from SP: " + code);
+
+        // Return appropriate default based on code range
+        if (code >= 1000 && code < 2000) {
+            return AUTHENTICATION_FAILED;
+        } else if (code >= 2000 && code < 3000) {
+            return USER_NOT_FOUND;
+        } else if (code >= 3000 && code < 4000) {
+            return SERVER_NOT_READY;
+        } else if (code >= 4000 && code < 5000) {
+            return SESSION_NOT_FOUND;
+        } else {
+            return INTERNAL_SERVER_ERROR;
+        }
     }
 }

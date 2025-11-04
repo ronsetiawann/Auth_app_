@@ -44,16 +44,21 @@ public class TransactionOtpService {
     @Value("${app.security.transaction-otp.max-attempts:3}")
     private Integer maxAttempts;
 
+    @Value("${app.security.transaction-otp.use-random-code:false}")
+    private Boolean useRandomCode;
+
+    @Value("${app.security.transaction-otp.skip-send-if-no-phone:true}")
+    private Boolean skipSendIfNoPhone;
+
     /**
      * Send transaction OTP via WhatsApp
      */
     @Transactional
     public TransactionOtpResponse sendTransactionOtp(TransactionOtpSendRequest request) {
-        //String userId = SecurityContextUtil.requireAuthentication().getUserId();
         String userId = request.getUserId();
         String clientId = request.getClientId();
 
-        log.info("Sending transaction OTP: userId={}, purpose={}, referece={}",
+        log.info("Sending transaction OTP: userId={}, purpose={}, reference={}",
                 userId, request.getPurpose(), request.getReference());
 
         // Rate limit: max 3 requests per 5 minutes
@@ -65,14 +70,38 @@ public class TransactionOtpService {
         );
 
         // Get user phone & name
-        String phoneNumber = userService.getUserMobilePhoneByClientId(clientId);
-        String userName = userService.getUserDisplayNameByClientId(clientId);
+        String phoneNumber = null;
+        String userName = null;
+        boolean shouldSendWhatsApp = true;
 
-        // Generate OTP
-        //String otpCode = RandomUtil.generateNumericOtp(AppConstants.DEFAULT_OTP_LENGTH);
-        String otpCode = "999999";
-        byte[] codeHash = otpCode.getBytes();
-        //byte[] codeHash = HashUtil.sha256WithSalt(otpCode);
+        try {
+            phoneNumber = userService.getUserMobilePhoneByClientId(clientId);
+            userName = userService.getUserDisplayNameByClientId(clientId);
+        } catch (AuthException e) {
+            if (skipSendIfNoPhone) {
+                log.warn("Phone number not found for clientId={}, skipping WhatsApp send", clientId);
+                shouldSendWhatsApp = false;
+                // Set default values untuk challenge creation
+                phoneNumber = "N/A";
+                userName = "Unknown User";
+            } else {
+                throw e; // Re-throw if not skipping
+            }
+        }
+
+        // Generate OTP based on configuration
+        String otpCode;
+        byte[] codeHash;
+
+        if (useRandomCode) {
+            otpCode = RandomUtil.generateNumericOtp(AppConstants.DEFAULT_OTP_LENGTH);
+            codeHash = HashUtil.sha256WithSalt(otpCode);
+            log.debug("Using random OTP code with SHA256 hash");
+        } else {
+            otpCode = "999999";
+            codeHash = otpCode.getBytes();
+            log.debug("Using fixed OTP code: 999999");
+        }
 
         // Create OTP challenge
         String purpose = "TRANSACTION_" + request.getPurpose().toUpperCase();
@@ -89,30 +118,39 @@ public class TransactionOtpService {
 
         log.info("Transaction OTP challenge created: challengeId={}", challengeId);
 
-        // Send via WhatsApp
-//        mekariWhatsAppService.sendTransactionOtp(
-//                userId,
-//                phoneNumber,
-//                userName,
-//                otpCode,
-//                request
-//        );
+        // Send via WhatsApp only if phone number is available
+        if (shouldSendWhatsApp) {
+            try {
+                mekariWhatsAppService.sendTransactionOtp(
+                        userId,
+                        phoneNumber,
+                        userName,
+                        otpCode,
+                        request
+                );
+                log.info("Transaction OTP sent successfully via WhatsApp: challengeId={}", challengeId);
+            } catch (Exception e) {
+                log.error("Failed to send WhatsApp OTP: challengeId={}, error={}", challengeId, e.getMessage());
+                // Continue execution, challenge sudah dibuat
+            }
+        } else {
+            log.info("WhatsApp send skipped due to missing phone number: challengeId={}", challengeId);
+        }
 
         // Log event
         eventLogService.logEvent(
                 userId,
                 null,
                 EventTypes.OTP_SENT,
-                "Transaction OTP sent: " + request.getPurpose()
+                "Transaction OTP sent: " + request.getPurpose() +
+                        (shouldSendWhatsApp ? " (WhatsApp)" : " (Phone not available)")
         );
-
-        log.info("Transaction OTP sent successfully via WhatsApp: challengeId={}", challengeId);
 
         return TransactionOtpResponse.builder()
                 .challengeId(challengeId)
                 .expiresIn(otpTtlSeconds)
                 .attemptsRemaining(maxAttempts)
-                .message("OTP sent to WhatsApp")
+                .message(shouldSendWhatsApp ? "OTP sent to WhatsApp" : "OTP challenge created (WhatsApp not sent)")
                 .build();
     }
 
@@ -121,12 +159,9 @@ public class TransactionOtpService {
      */
     @Transactional
     public void verifyTransactionOtp(TransactionOtpVerifyRequest request) {
-        //String userId = SecurityContextUtil.requireAuthentication().getUserId();
-
         String userId = userService.getUserIdByChallengeId(String.valueOf(request.getChallengeId()));
 
-        log.info("Verifying transaction hallengeId={}",
-                request.getChallengeId());
+        log.info("Verifying transaction OTP: challengeId={}", request.getChallengeId());
 
         // Rate limit
         rateLimitCacheService.checkAndIncrement(
@@ -136,13 +171,17 @@ public class TransactionOtpService {
                 otpTtlSeconds
         );
 
-        // Verify
-        //byte[] codeHash = HashUtil.sha256WithSalt(request.getCode());
-//        boolean isValid = mfaProcedureRepository.verifyOtpChallenge(
-//                request.getChallengeId(),
-//                codeHash
-//        );
-        byte[] codeHash = request.getCode().getBytes(); // Simple bytes untuk testing
+        // Generate code hash based on configuration
+        byte[] codeHash;
+        if (useRandomCode) {
+            codeHash = HashUtil.sha256WithSalt(request.getCode());
+            log.debug("Verifying with SHA256 hashed code");
+        } else {
+            codeHash = request.getCode().getBytes();
+            log.debug("Verifying with plain code bytes");
+        }
+
+        // Verify OTP
         boolean isValid = mfaProcedureRepository.verifyOtpChallenge(
                 request.getChallengeId(),
                 codeHash

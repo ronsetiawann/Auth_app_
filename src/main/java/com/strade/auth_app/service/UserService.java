@@ -78,6 +78,7 @@ public class UserService {
         }
     }
 
+
     /**
      * Get email from SL.SClientView
      */
@@ -114,14 +115,14 @@ public class UserService {
                     if (client.getPhone() == null || client.getPhone().isEmpty()) {
                         throw new AuthException(
                                 ErrorCode.INVALID_REQUEST,
-                                "Phone number not configured"
+                                "Phone number not configured for clientId: " + clientId
                         );
                     }
                     return client.getFormattedPhone();
                 })
                 .orElseThrow(() -> new AuthException(
                         ErrorCode.INVALID_REQUEST,
-                        "Client not found"
+                        "Client not found: " + clientId
                 ));
     }
 

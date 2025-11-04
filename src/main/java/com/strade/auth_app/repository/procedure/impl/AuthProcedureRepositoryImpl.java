@@ -13,12 +13,15 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.Types;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 /**
  * Implementation of authentication stored procedure calls
+ *
+ * MINIMAL FIX - Only essential changes from existing code
  */
 @Slf4j
 @Repository
@@ -27,6 +30,9 @@ public class AuthProcedureRepositoryImpl implements AuthProcedureRepository {
 
     private final DataSource dataSource;
 
+    /**
+     * ✅ FIXED: Added minLoginHour and minLoginMinute parameters (now 12 total)
+     */
     @Override
     public LoginProcedureResult selectUserLogon(
             String userId,
@@ -38,7 +44,9 @@ public class AuthProcedureRepositoryImpl implements AuthProcedureRepository {
             String appCode,
             String deviceId,
             String userAgent,
-            Boolean mfaEnforced
+            Boolean mfaEnforced,
+            Integer minLoginHour,      // ✅ NEW PARAMETER
+            Integer minLoginMinute     // ✅ NEW PARAMETER
     ) {
         log.info("=== SelectUser_Logon Parameters ===");
         log.info("UserId: {}", userId);
@@ -51,6 +59,8 @@ public class AuthProcedureRepositoryImpl implements AuthProcedureRepository {
         log.info("DeviceId: {}", deviceId);
         log.info("UserAgent: {}", userAgent);
         log.info("MfaEnforced: {}", mfaEnforced);
+        log.info("MinLoginHour: {}", minLoginHour);        // ✅ NEW
+        log.info("MinLoginMinute: {}", minLoginMinute);    // ✅ NEW
         log.info("====================================");
 
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
@@ -66,10 +76,11 @@ public class AuthProcedureRepositoryImpl implements AuthProcedureRepository {
                         new SqlParameter("AppCode", Types.NVARCHAR),
                         new SqlParameter("DeviceId", Types.NVARCHAR),
                         new SqlParameter("UserAgent", Types.NVARCHAR),
-                        new SqlParameter("MfaEnforced", Types.BIT)
+                        new SqlParameter("MfaEnforced", Types.BIT),
+                        new SqlParameter("MinLoginHour", Types.INTEGER),
+                        new SqlParameter("MinLoginMinute", Types.INTEGER)
                 )
                 .returningResultSet("#result-set-1", (rs, rowNum) -> {
-                    // Custom RowMapper untuk extract data dari ResultSet
                     Map<String, Object> row = new java.util.LinkedHashMap<>();
                     int columnCount = rs.getMetaData().getColumnCount();
                     for (int i = 1; i <= columnCount; i++) {
@@ -84,7 +95,8 @@ public class AuthProcedureRepositoryImpl implements AuthProcedureRepository {
         try {
             spResult = jdbcCall.execute(
                     userId, password, channel, appVersion, serverNo,
-                    terminalId, appCode, deviceId, userAgent, mfaEnforced
+                    terminalId, appCode, deviceId, userAgent, mfaEnforced,
+                    minLoginHour, minLoginMinute  // ✅ NEW PARAMETERS
             );
 
             log.info("=== Raw SP Result ===");
@@ -110,7 +122,7 @@ public class AuthProcedureRepositoryImpl implements AuthProcedureRepository {
             );
         }
 
-        // ✅ FIXED: Extract data dari result-set
+        // Extract data dari result-set
         Map<String, Object> actualData = extractFirstRow(spResult, "#result-set-1");
 
         if (actualData == null || actualData.isEmpty()) {
@@ -137,6 +149,43 @@ public class AuthProcedureRepositoryImpl implements AuthProcedureRepository {
         log.info("=====================");
 
         return loginResult;
+    }
+
+    /**
+     * ✅ NEW METHOD: Update session with JTI after token generation
+     */
+    @Override
+    public void updateSessionJti(
+            UUID sessionId,
+            String jwtKid,
+            String jwtJti
+    ) {
+        log.debug("Calling Auth.UpdateSessionJti for sessionId: {}", sessionId);
+
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
+                .withSchemaName("Auth")
+                .withProcedureName("UpdateSessionJti")
+                .declareParameters(
+                        new SqlParameter("SessionId", Types.VARCHAR),
+                        new SqlParameter("JwtKid", Types.NVARCHAR),
+                        new SqlParameter("JwtJti", Types.NVARCHAR)
+                );
+
+        try {
+            jdbcCall.execute(
+                    sessionId != null ? sessionId.toString() : null,
+                    jwtKid,
+                    jwtJti
+            );
+            log.debug("✓ Session JTI updated successfully");
+        } catch (Exception e) {
+            log.error("Error calling UpdateSessionJti", e);
+            throw new AuthException(
+                    ErrorCode.DATABASE_ERROR,
+                    "Update session JTI failed: " + e.getMessage(),
+                    e
+            );
+        }
     }
 
     @Override
@@ -194,7 +243,6 @@ public class AuthProcedureRepositoryImpl implements AuthProcedureRepository {
             spResult.forEach((key, value) -> log.info("{} = {}", key, value));
             log.info("==========================");
 
-            // ✅ Extract first row
             Map<String, Object> actualData = extractFirstRow(spResult, "#result-set-1");
 
             if (actualData == null || actualData.isEmpty()) {
@@ -230,7 +278,7 @@ public class AuthProcedureRepositoryImpl implements AuthProcedureRepository {
             String ip,
             String userAgent
     ) {
-        log.debug("Calling updateUserLoginSuccess for userId: {}", userId);
+        log.debug("Calling updateUserLoginSuccess_v2 for userId: {}", userId);
 
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
                 .withSchemaName("dbo")
@@ -269,7 +317,7 @@ public class AuthProcedureRepositoryImpl implements AuthProcedureRepository {
             Integer maxLoginRetry,
             String lastLoginFail
     ) {
-        log.debug("Calling updateUserLoginFail for userId: {}", userId);
+        log.debug("Calling updateUserLoginFail_v2 for userId: {}", userId);
 
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource)
                 .withSchemaName("dbo")
@@ -296,9 +344,6 @@ public class AuthProcedureRepositoryImpl implements AuthProcedureRepository {
     // Helper methods
     // ========================================
 
-    /**
-     * ✅ Extract first row from ResultSet
-     */
     @SuppressWarnings("unchecked")
     private Map<String, Object> extractFirstRow(Map<String, Object> spResult, String resultSetKey) {
         Object resultSetObj = spResult.get(resultSetKey);
@@ -324,7 +369,6 @@ public class AuthProcedureRepositoryImpl implements AuthProcedureRepository {
     }
 
     private LoginProcedureResult mapToLoginResult(Map<String, Object> result) {
-        // ✅ Coba ambil dengan berbagai variasi nama (case-insensitive)
         Boolean isLoginSuccess = getBooleanFlexible(result, "IsLoginSuccess", "IsLoginSucces", "isLoginSuccess");
         String loginMessage = getStringFlexible(result, "LoginMessage", "loginMessage");
         Integer errCode = getIntegerFlexible(result, "ErrCode", "errCode");
@@ -356,7 +400,6 @@ public class AuthProcedureRepositoryImpl implements AuthProcedureRepository {
                 .build();
     }
 
-    // ✅ Flexible getters yang coba berbagai variasi nama
     private Boolean getBooleanFlexible(Map<String, Object> map, String... keys) {
         for (String key : keys) {
             Object value = map.get(key);
@@ -403,7 +446,6 @@ public class AuthProcedureRepositoryImpl implements AuthProcedureRepository {
         return null;
     }
 
-    // Converter helpers
     private Boolean convertToBoolean(Object value) {
         if (value instanceof Boolean) return (Boolean) value;
         if (value instanceof Number) return ((Number) value).intValue() != 0;
@@ -411,7 +453,6 @@ public class AuthProcedureRepositoryImpl implements AuthProcedureRepository {
         String strValue = value.toString().trim().toLowerCase();
         if (strValue.isEmpty()) return null;
 
-        // Handle "1"/"0", "true"/"false", "yes"/"no"
         if (strValue.equals("1") || strValue.equals("true") || strValue.equals("yes")) {
             return true;
         }
